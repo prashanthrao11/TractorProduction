@@ -61,6 +61,7 @@ namespace TractorProduction.Web
             services.AddScoped<IWorkflowRepository, WorkflowService>();
             services.AddScoped<IAttachmentRepository, AttachmentService>();
 
+
             services.AddCors(options =>
             {
                 options.AddPolicy("Testing",

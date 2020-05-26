@@ -20,6 +20,9 @@ namespace TractorProduction.Web.Models
 
         [NotMapped]
         public int Role_ID { get; set; }
+
+        [NotMapped]
+        public int Role_Name { get; set; }
         public bool Is_Active { get; set; }
 
     }
