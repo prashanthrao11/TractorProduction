@@ -1,0 +1,47 @@
+<header class="header">
+  <nav
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 custom-navbar"
+  >
+    <div class="container custom-container">
+      <a class="navbar-brand custom-navbar-brand" [routerLink]="['/']">
+        <img src="assets/images/mahindra_tractor_logo.png" class="logo-mahindra" />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target=".navbar-collapse"
+        aria-label="Toggle navigation"
+        [attr.aria-expanded]="isExpanded"
+        (click)="toggle()"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <span class="home-header">Tractor Production Workflow System</span>
+      <div>
+        <div>
+         <div class="loggedinusername">Prashanth Surineni</div>
+          <div class="designation">[ SCPC ]</div>
+        </div>
+       <div>
+         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
+              [ngClass]="{ show: isExpanded }">
+           <ul class="navbar-nav flex-grow">
+             <li class="nav-item"
+                 [routerLinkActive]="['link-active']"
+                 [routerLinkActiveOptions]="{ exact: true }">
+               <a class="nav-link text-dark custom-text-dark custom-nav-link" [routerLink]="['/newrequest']">New Production Request</a>
+             </li>
+             <li class="nav-item" [routerLinkActive]="['link-active']">
+               <a class="nav-link text-dark custom-text-dark custom-nav-link" [routerLink]="['/requests']">Reports</a>
+             </li>
+             <li class="nav-item" [routerLinkActive]="['link-active']">
+               <a class="nav-link text-dark custom-text-dark custom-nav-link" [routerLink]="['/adminpanel']">Manage Masters</a>
+             </li>
+           </ul>
+         </div>
+       </div>
+      </div>
+    </div>
+  </nav>
+</header>

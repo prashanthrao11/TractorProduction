@@ -1,0 +1,9 @@
+<input [attr.disabled]="(!isEnabled) ? '' : null" type="file" #milestoneDoc (change)="fileEvent($event,prodmilestoneId)" />
+<table class="table table-bordered mt-2" *ngIf="list.length>0">
+    <tr *ngFor="let item of list">
+      <td>{{item.Attachment_Name}}</td>
+      <td>
+        <a (click)="delItem(item)"><b>X</b></a>
+      </td>
+    </tr>
+</table>

@@ -1,0 +1,58 @@
+<div class="card customcard" style="width:98%">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-4">
+        <strong>Production Milestones</strong><button id="btnSave" (click)="save()" name="btnSave" class="btn-primary btn ml-5">Save</button>
+      </div>
+      <div class="col-md-8 row milestoneColor">
+        <div class="box-green col-md-1"></div><div class="col-md-2">Completed</div>
+        <div class="box-yellow col-md-1"></div><div class="col-md-2">Pending</div>
+        <div class="box-red col-md-1"></div><div class="col-md-2">Overdue</div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th style="width:20%">Milestone</th>
+          <th>Department</th>
+          <th>Target Date</th>
+          <th>Status</th>
+          <th style="width:20%">Comments</th>
+          <th>Actual Date</th>
+          <th>Supporting Docs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of model.ProductionMilestones;let i =index;">
+          <td>{{item.PhaseItem.Phase_Name}}</td>
+          <td>{{item.MilestoneItem.Milestone_Name}}</td>
+          <td>{{item.DeptItem.Department_Name}}</td>
+          <td>{{item.ProdMilestoneItem.TargetDate|date}}</td>
+          <td>
+            <select class="form-control" [(ngModel)]="item.ProdMilestoneItem.Status_ID" [attr.disabled]="(item.IsDepartmentUser!=true) ? '' : null">
+              <option value="0">Select</option>
+              <option value="1">Yes</option>
+            </select>
+          </td>
+          <td>
+            <textarea style="width:90%" [(ngModel)]="item.ProdMilestoneItem.Comments" [attr.disabled]="(item.IsDepartmentUser!=true) ? '' : null">
+            </textarea>
+          </td>
+          <td [ngClass]="{'greencolor':item.ProdMilestoneItem|colorCode:'greencolor',
+              'redcolor':item.ProdMilestoneItem|colorCode:'redcolor',
+              'yellowcolor':item.ProdMilestoneItem|colorCode:'yellowcolor'}">
+          {{item.ProdMilestoneItem.ActualDate|date}}</td>
+          <td>
+            <app-attachment-grid [isEnabled]="item.IsDepartmentUser" [groupName]="'Milestone'" [prodmilestoneId]="item.ProdMilestoneItem.P_Approval_ID"></app-attachment-grid>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+    <button id="btnSave1" name="btnSave1" (click)="save()" class="btn-primary btn ml-5">Save</button>
+  </div>
+</div>

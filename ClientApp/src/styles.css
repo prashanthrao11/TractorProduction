@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+.container{
+    padding-left:5px!important;
+    margin-left:2px!important;
+}
+
+@media (min-width: 1200px) {
+  .custom-container {
+    max-width: 1365px !important;
+    padding-left:20px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .custom-container {
+    max-width: 1150px !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .custom-container {
+    max-width: 920px !important;
+  }
+}

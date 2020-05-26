@@ -1,0 +1,62 @@
+.customcard {
+  font-size: 0.7rem;
+}
+
+.card-header {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.form-control {
+  font-size: 0.7rem;
+}
+
+.box-green {
+  min-height: 20px;
+  max-height: 10px;
+  min-width: 10px;
+  max-width: 10px;
+  background-color: green;
+  border: 1px solid green;
+}
+
+.box-yellow {
+  min-height: 20px;
+  max-height: 10px;
+  min-width: 10px;
+  max-width: 10px;
+  background-color: yellow;
+  border: 1px solid yellow;
+}
+
+.box-red {
+  min-height: 20px;
+  max-height: 10px;
+  min-width: 10px;
+  max-width: 10px;
+  background-color: red;
+  border: 1px solid red;
+}
+
+.milestoneColor {
+  margin-top: 10px;
+}
+
+.table td, .table th {
+  padding: .25rem !important;
+}
+
+.greencolor {
+  background-color: green;
+  color: white;
+}
+
+.redcolor {
+  background-color: red;
+  color: white;
+}
+
+.yellowcolor {
+  background-color: yellow;
+  color: black;
+}

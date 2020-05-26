@@ -1,0 +1,34 @@
+<div class="card customcard" style="width:98%">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-4">
+        <strong>Production Approvers</strong>
+      </div>
+      <!--<div class="col-md-8 row milestoneColor">
+        <div class="box-green col-md-1"></div><div class="col-md-2">Completed</div>
+        <div class="box-yellow col-md-1"></div><div class="col-md-2">Pending</div>
+        <div class="box-red col-md-1"></div><div class="col-md-2">Overdue</div>
+      </div>-->
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="width:10%">Area</th>
+          <th *ngFor="let rItem of roleItems">
+            {{rItem.Role_Name}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dItem of deptItems">
+          <td>{{dItem.Department_Name}}</td>
+          <td *ngFor="let rItem of roleItems">
+            {{model.Items|prodApproveInfo:dItem.Department_ID:rItem.Role_ID}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

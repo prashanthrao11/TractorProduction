@@ -1,0 +1,68 @@
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+.logo-mahindra{
+
+}
+
+.loggedinusername{
+    font-size:12px;
+    font-weight:200;
+    text-align:right;
+}
+.designation {
+  font-size: 10px;
+  font-weight: 200;
+  text-align:right;
+}
+.custom-navbar-brand {
+  padding-top: 0px !important;
+}
+.custom-navbar{
+    padding:0px!important;
+}
+.custom-container {
+  padding-left: 0px !important;
+  margin-left: 0px !important;
+  background-color: #e51937;
+  color:white!important;
+}
+.custom-nav-link {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  border-right:1px solid white;
+}
+
+.custom-text-dark{
+    color:white!important;
+}
+@media (min-width: 1200px) {
+  .custom-container {
+    max-width: 1350px !important;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .custom-container {
+    max-width: 1150px !important;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .custom-container {
+    max-width: 920px !important;
+  }
+}

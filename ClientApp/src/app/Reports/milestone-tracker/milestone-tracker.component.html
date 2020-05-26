@@ -1,0 +1,48 @@
+<div class="card customcard" style="width:98%">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-4">
+        <strong>Production Milestones</strong>
+        <button id="btnSave" (click)="save()" name="btnSave" class="btn-primary btn ml-5">Save</button>
+      </div>
+      <div class="col-md-8 row milestoneColor">
+        <div class="box-green col-md-1"></div><div class="col-md-2">Completed</div>
+        <div class="box-yellow col-md-1"></div><div class="col-md-2">Pending</div>
+        <div class="box-red col-md-1"></div><div class="col-md-2">Overdue</div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th style="width:10%">Phase</th>
+          <th style="width:20%">Milestone</th>
+          <th *ngFor="let deptItem of deptItems">
+            {{deptItem.Department_Name}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let pItem of phaseItems;let i =index;">
+          <tr>
+            <td [attr.rowspan]="model.ProductionMilestones|colspan:pItem.Product_Phase_ID">{{pItem.Phase_Name}}</td>
+          </tr>
+          <tr *ngFor="let mItem of model.ProductionMilestones|phasemilestones:pItem.Product_Phase_ID">
+            <td>{{mItem.Milestone_Name}}</td>
+            <td *ngFor="let dItem of deptItems"
+                [ngClass]="{'greencolor':model.ProductionMilestones|phasemilestonesdeptcolor:pItem.Product_Phase_ID:dItem.Department_ID:mItem.Milestone_ID:'greencolor',
+              'redcolor':model.ProductionMilestones|phasemilestonesdeptcolor:pItem.Product_Phase_ID:dItem.Department_ID:mItem.Milestone_ID:'redcolor',
+              'yellowcolor':model.ProductionMilestones|phasemilestonesdeptcolor:pItem.Product_Phase_ID:dItem.Department_ID:mItem.Milestone_ID:'yellowcolor'}">
+              {{ model.ProductionMilestones|phasemilestonesdeptstatus:pItem.Product_Phase_ID:dItem.Department_ID:mItem.Milestone_ID }}
+            </td>
+          </tr>
+        </ng-container>
+        <tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+    <button id="btnSave1" name="btnSave1" (click)="save()" class="btn-primary btn ml-5">Save</button>
+  </div>
+</div>

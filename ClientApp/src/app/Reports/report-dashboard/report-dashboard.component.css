@@ -1,0 +1,111 @@
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1350px !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .container {
+    max-width: 1150px !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    max-width: 920px !important;
+  }
+}
+
+.searchForm {
+  padding-left: 5px;
+  border-right: 1px dotted red;
+  background-color: #f5f5f5;
+  border: 1px solid;
+  border-color: #DDD;
+  padding-bottom: 10px;
+}
+
+.searchResults {
+  padding-left: 15px;
+  padding-top: 15px;
+  border-bottom: 1px solid;
+  border-top: 1px solid;
+  border-color: #DDD;
+  padding-bottom: 10px;
+}
+
+.gridBox {
+}
+
+.SearchItem {
+  border: 1px solid red;
+  /*background-color: #e51937;*/
+  /*background: linear-gradient(to bottom, #ff0000 25%, #ff6699 73%);*/
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.tractorportnum {
+  font-size: 10px;
+  /*font-weight:bold;*/
+  padding: 5px;
+  color: #e51937;
+}
+
+.engineportnum {
+  font-size: 10px;
+  /*font-weight: bold;*/
+  padding: 5px;
+  color: #e51937;
+}
+
+.transmissionportnum {
+  font-size: 10px;
+  /*font-weight: bold;*/
+  padding: 5px;
+  color: #e51937;
+}
+
+.hydraulicsportnum {
+  font-size: 10px;
+  /*font-weight: bold;*/
+  padding: 5px;
+  color: #e51937;
+}
+
+.dashedline {
+  min-height: 1px;
+  background-color: #e51937;
+  padding-bottom: 1px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.cardicons {
+  background-color: rgb(72, 80, 131);
+}
+
+  .cardicons img {
+    width: 20pt;
+    height: 20pt;
+  }
+
+.processInitiated {
+  background-color: #edda0c;
+  color: black;
+  padding-top: 2px;
+}
+
+.AwaitingApproval {
+  background-color: #94fc03;
+  color: black;
+  padding-top: 2px;
+}
+
+.AwaitingFinalApproval {
+  background-color: #05a84f;
+  color: black;
+  padding-top: 2px;
+}

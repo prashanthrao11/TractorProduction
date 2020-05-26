@@ -1,0 +1,40 @@
+
+<div class="card">
+  <div class="card-header">
+    <h4>Manage Production Phases</h4>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="form-group">
+        <label for="email">Phase Name:</label>
+        <input type="text" class="form-control" id="Phase_Name" [(ngModel)]="model.Phase_Name">
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary" (click)="save()">Save</button>
+    <button class="btn btn-secondary ml-2" (click)="cancel()">Cancel</button>
+  </div>
+</div>
+<br />
+<div class="card">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Phase Name</th>
+        <th>Edit</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of Items">
+        <td>{{item.Phase_Name}}</td>
+        <td>
+          <button class="btn-sm btn-primary" (click)="editItem(item)">Edit</button>
+        </td>
+        <td><button class="btn-sm btn-danger ml-2" (click)="delete(item)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

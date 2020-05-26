@@ -1,0 +1,83 @@
+
+<div class="card">
+  <div class="card-header">
+    <h4>Manage Users</h4>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="form-group col-md-3">
+        <label for="email">User Name:</label>
+        <input type="text" class="form-control" id="User_name" [(ngModel)]="model.User_name">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="email">First Name :</label>
+        <input type="text" class="form-control" id="First_Name" [(ngModel)]="model.First_Name">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="email">Last Name:</label>
+        <input type="text" class="form-control" id="Last_Name" [(ngModel)]="model.Last_Name">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="email">Email :</label>
+        <input type="text" class="form-control" id="Email" [(ngModel)]="model.Email">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="email">Phone Num:</label>
+        <input type="text" class="form-control" id="Phone_Number" [(ngModel)]="model.Phone_Number">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-3">
+        <label for="email">User Role:</label>
+        <select class="form-control" [(ngModel)]="model.Role_ID">
+          <option *ngFor="let item of roleItems" [value]="item.Role_ID">{{item.Role_Name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label for="email" class="ml-3"><b>Departments</b></label>
+      </div>
+    </div>
+    <div class="row">
+      <label class="checkbox-inline" *ngFor="let item of deptItems">
+        <input class="ml-5 checkBoxStyle" type="checkbox" [(ngModel)]="item.IsSelected"> {{item.Department_Name}}
+      </label>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary" (click)="save()">Save</button>
+    <button class="btn btn-secondary ml-2" (click)="cancel()">Cancel</button>
+  </div>
+</div>
+<br />
+<div class="card">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>User Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Role</th>
+        <th>Departments</th>
+        <th>Edit</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of Items">
+        <td>{{item.User_Name}}</td>
+        <td>{{item.Email}}</td>
+        <td>{{item.Phone_Number}}</td>
+        <td>{{item.Role_Name}}</td>
+        <td>{{item.DepartmentNames}}</td>
+        <td>
+          <button class="btn-sm btn-primary" (click)="editItem(item)">Edit</button>
+        </td>
+        <td>
+          <button class="btn-sm btn-danger ml-2" (click)="delete(item)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

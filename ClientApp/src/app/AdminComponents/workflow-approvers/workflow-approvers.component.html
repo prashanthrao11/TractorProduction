@@ -1,0 +1,31 @@
+<div class="card">
+  <div class="card-header">
+    <h4>Manage Workflow Approvers</h4>
+  </div>
+  <div class="card-body">
+    <div class="form-group col-md-6">
+      <label for="email">Workflow Name:</label>
+      <select class="form-control" (change)="loadWorkflowApproveDetails()" [(ngModel)]="model.Workflow_ID">
+        <option *ngFor="let workflowItem of workflowItems" [value]="workflowItem.Workflow_ID">{{workflowItem.Workflow_Name}}</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+    </div>
+    <ng-container *ngFor="let dept of departmentRoles">
+      <div class="row">
+        <div class="form-group">
+          <label for="email" class="ml-3"><b>{{dept.Department_Name}}</b></label>
+        </div>
+      </div>
+      <div class="row">
+        <label class="checkbox-inline" *ngFor="let item of dept.RolesList">
+          <input class="ml-5 checkBoxStyle" type="checkbox" [(ngModel)]="item.IsSelected"> {{item.Role_Name}}
+        </label>
+      </div>
+    </ng-container>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary" (click)="save()">Save</button>
+    <button class="btn btn-secondary ml-2" (click)="cancel()">Cancel</button>
+  </div>
+</div>
