@@ -11,7 +11,7 @@ namespace TractorProduction.Web.Repositories
         Task<List<UserVM>> GetUsers();
         Task<UserVM> GetUserById(int? userId);
         Task<int> AddUser(UserVM user);
-
+        Task<UserVM> CurrentUser();
         User GetCurrentUser();
     }
 }

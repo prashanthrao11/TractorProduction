@@ -11,15 +11,17 @@ namespace TractorProduction.Web.Services
     public class ProductionMilestoneService : IProductionMilestoneRepository
     {
         private readonly APIContext _context;
+        private readonly UserService _userService;
         public ProductionMilestoneService(APIContext context)
         {
             _context = context;
+            _userService = new UserService(context);
         }
         public async Task<int> UpdateProductionMilestone(ProductionMilestonesVM model)
         {
             if (_context != null)
             {
-                int userId = 1;
+                int userId = _userService.GetCurrentUser().User_ID;
                 var prodList = await (from pm in _context.ProductionMilestone
                                       from md in _context.MilestoneDepartment.Where(x => x.Milestone_Department_ID == pm.Milestone_Department_ID)
                                       from wpm in _context.WorkflowPhaseMilestone.Where(x => x.Milestone_ID == md.Milestone_ID)
@@ -48,12 +50,12 @@ namespace TractorProduction.Web.Services
         }
         private void CheckAndUpdateStatus(int id)
         {
-            var totalItems = _context.ProductionMilestone.Where(x => x.Is_Active == true && x.Production_ID == id && x.Status_ID!=0).Count();
+            var totalItems = _context.ProductionMilestone.Where(x => x.Is_Active == true && x.Production_ID == id && x.Status_ID==0).Count();
             if (totalItems == 0)
             {
                 var production =  _context.Production.Where(x => x.Production_ID == id).First();
                 production.Status_ID = _context.Status.Where(x => x.Status_Key == "AwaitingApproval").First().Status_ID;
-                production.Modified_By = "prashanth";
+                production.Modified_By = _userService.GetCurrentUser().User_Name;
                 production.Modified_Date = DateTime.Now;
                 _context.SaveChanges();
             }
@@ -62,7 +64,7 @@ namespace TractorProduction.Web.Services
         {
             if (_context != null)
             {
-                int userId = 1;
+                int userId = _userService.GetCurrentUser().User_ID;
                 return await (from pm in _context.ProductionMilestone
                               from md in _context.MilestoneDepartment.Where(x => x.Milestone_Department_ID == pm.Milestone_Department_ID)
                               from wpm in _context.WorkflowPhaseMilestone.Where(x => x.Milestone_ID == md.Milestone_ID)

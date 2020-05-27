@@ -11,9 +11,11 @@ namespace TractorProduction.Web.Services
     public class ProductionApprovalsService : IProductionApprovalRepository
     {
         private readonly APIContext _context;
+        private readonly UserService _userService;
         public ProductionApprovalsService(APIContext context)
         {
             _context = context;
+            _userService = new UserService(context);
         }
         public async Task<int> UpdateProductionApprovals(ProductionApprovalVM model)
         {
@@ -24,18 +26,18 @@ namespace TractorProduction.Web.Services
                 dbItem.Action_Status_ID = item.Action_Status_ID;
                 dbItem.Action_Comments = item.Action_Comments;
             }
-            await _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync();
             CheckAndUpdateStatus(model.Production_ID);
-            return 0;
+            return result;
         }
         private void CheckAndUpdateStatus(int id)
         {
-            var totalItems = _context.ProductionApproval.Where(x => x.Is_Active == true && x.Production_ID == id && x.Action_Status_ID != 0).Count();
+            var totalItems = _context.ProductionApproval.Where(x => x.Is_Active == true && x.Production_ID == id && x.Action_Status_ID == 0).Count();
             if (totalItems == 0)
             {
                 var production = _context.Production.Where(x => x.Production_ID == id).First();
                 production.Status_ID = _context.Status.Where(x => x.Status_Key == "AwaitingFinalApproval").First().Status_ID;
-                production.Modified_By = "prashanth";
+                production.Modified_By = _userService.GetCurrentUser().User_Name;
                 production.Modified_Date = DateTime.Now;
                 _context.SaveChanges();
             }
@@ -44,7 +46,7 @@ namespace TractorProduction.Web.Services
         {
             if (_context != null)
             {
-                int userId = 1;
+                int userId = _userService.GetCurrentUser().User_ID;
                 return await (from pa in _context.ProductionApproval.Where(x => x.Production_ID == productionId)
                               from d in _context.Department.Where(x => pa.Department_ID == x.Department_ID)
                               from r in _context.Role.Where(x => x.Role_ID == pa.Role_ID)
@@ -54,6 +56,8 @@ namespace TractorProduction.Web.Services
                               select new ProductionApproval() { 
                                P_D_Approval_ID=pa.P_D_Approval_ID,
                                Production_ID=pa.Production_ID,
+                               Action_Comments=pa.Action_Comments,
+                               Action_Status_ID=pa.Action_Status_ID,
                                Role_ID=pa.Role_ID,
                                Department_ID=pa.Department_ID,
                                DepartmentName=d.Department_Name,
@@ -68,7 +72,7 @@ namespace TractorProduction.Web.Services
         {
             if (_context != null)
             {
-                int userId = 1;
+                int userId = _userService.GetCurrentUser().User_ID;
                 return await (from pa in _context.ProductionApproval.Where(x => x.Production_ID == productionId)
                               from d in _context.Department.Where(x => pa.Department_ID == x.Department_ID)
                               from r in _context.Role.Where(x => x.Role_ID == pa.Role_ID)
@@ -84,8 +88,8 @@ namespace TractorProduction.Web.Services
                                   Action_By=pa.Action_By,
                                   Action_Comments=pa.Action_Comments,
                                   Is_Active = pa.Is_Active,
-                                  Action_Status_ID=pa.Action_Status_ID,
-                                  Action_Date=pa.Action_Date
+                                  Action_Status_ID = pa.Action_Status_ID,
+                                  Action_Date =pa.Action_Date
                               }).ToListAsync();
 
             }

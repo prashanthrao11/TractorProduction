@@ -14,9 +14,9 @@ namespace TractorProduction.Web.Models
         public int P_U_Approval_ID { get; set; }
         public int Production_ID { get; set; }
         public int Role_ID { get; set; }
-        public int Submitted_By_ID { get; set; }
+        public int? Submitted_By_ID { get; set; }
 
-        public int Status_ID { get; set; }
+        public int? Status_ID { get; set; }
         public string Comments { get; set; }
     }
 }

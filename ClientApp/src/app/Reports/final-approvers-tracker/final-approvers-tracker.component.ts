@@ -9,15 +9,16 @@ import { ProductionUserApproval } from '../../Models/production-user-approval';
 import { ProductionfinalapprovalsService } from '../../Services/productionfinalapprovals.service';
 
 @Component({
-  selector: 'app-requestfinalapprovers',
-  templateUrl: './requestfinalapprovers.component.html',
-  styleUrls: ['./requestfinalapprovers.component.css']
+  selector: 'app-final-approvers-tracker',
+  templateUrl: './final-approvers-tracker.component.html',
+  styleUrls: ['./final-approvers-tracker.component.css']
 })
-export class RequestfinalapproversComponent implements OnInit {
+export class FinalApproversTrackerComponent implements OnInit {
 
-  model: ProductionUserApproval;
+  Items: ProductionUserApproval[]=[];
   prodItem: ProductionRequestModel;
   isLoaded: boolean = false;
+  productionId: number;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -25,33 +26,28 @@ export class RequestfinalapproversComponent implements OnInit {
     private service: ProductionfinalapprovalsService,
     private prodService: ProductionService
   ) {
-    this.model = new ProductionUserApproval();
+    //this.model = new ProductionUserApproval();
     this.prodItem = new ProductionRequestModel();
-    this.route.params.subscribe(params => { this.model.Production_ID = params['id']; });
+    this.route.params.subscribe(params => { this.productionId = params['id']; });
   }
 
   ngOnInit() {
     this.loadData();
     this.loadProdItem();
   }
-  save() {
-    this.model.Production_ID = parseInt(this.model.Production_ID.toString());
-    this.model.Status_ID = parseInt(this.model.Status_ID.toString());
-    this.service.save(this.model).subscribe(data => {
-      this.alertMessage.showSuccess("Details Saved Successfully.");
-    });
-  }
+  
   loadData() {
-    this.service.getById(this.model.Production_ID).subscribe(data => {
+    this.service.getAll(this.productionId).subscribe(data => {
       console.log(data);
-      this.model = data;
+      this.Items = data;
       this.isLoaded = true;
     });
   }
   loadProdItem() {
-    this.prodService.getById(this.model.Production_ID).subscribe(data => {
+    this.prodService.getById(this.productionId).subscribe(data => {
       this.prodItem = data;
       console.log(data);
     });
   }
+
 }

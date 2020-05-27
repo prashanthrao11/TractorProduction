@@ -50,6 +50,9 @@
         <div *ngIf="(item.Status=='Awaiting Final Approval')" class="hydraulicsportnum AwaitingFinalApproval">
           <b>Status : </b>{{item.Status}}
         </div>
+        <div *ngIf="(item.Status=='Approved/Not Approved')" class="hydraulicsportnum AwaitingFinalApproval">
+          <b>Status : </b>Completed
+        </div>
         <div class="hydraulicsportnum">
           <b>Created By :</b> {{item.Created_By}}
         </div>
@@ -60,18 +63,23 @@
           <div _ngcontent-qwc-c46="" class="row mx-0">
             <div _ngcontent-qwc-c46="" class="col-md-12 mt-2 cardicons">
               <div _ngcontent-qwc-c46="" class="row py-2">
-                <div _ngcontent-qwc-c46="" class="col-md-4 col-4 border-right text-center">
+                <div _ngcontent-qwc-c46="" class="col-md-3 col-3 border-right text-center">
                   <a _ngcontent-qwc-c46="" [routerLink]="['newrequest',item.Production_ID]">
                     <img _ngcontent-qwc-c46="" src="assets/images/Project.png" alt="">
                   </a>
                 </div>
-                <div _ngcontent-qwc-c46="" class="col-md-4 col-4 border-right text-center">
-                  <a _ngcontent-qwc-c46="" [routerLink]="['milestoneapprovals',item.Production_ID]">
+                <div _ngcontent-qwc-c46="" class="col-md-3 col-3 border-right text-center">
+                  <a _ngcontent-qwc-c46="" [routerLink]="['/milestoneapprovals',item.Production_ID]">
                     <img _ngcontent-qwc-c46="" src="assets/images/MilestoneDashboardwhite.png" alt="">
                   </a>
                 </div>
-                <div _ngcontent-qwc-c46="" class="col-md-4 col-4 text-center">
-                  <a _ngcontent-qwc-c46="" [routerLink]="['approvers',item.Production_ID]">
+                <div _ngcontent-qwc-c46="" class="col-md-3 col-3 border-right text-center">
+                  <a _ngcontent-qwc-c46="" [routerLink]="['/approvers',item.Production_ID]">
+                    <img _ngcontent-qwc-c46="" src="assets/images/Project_new.png" alt="">
+                  </a>
+                </div>
+                <div _ngcontent-qwc-c46="" class="col-md-3 col-3 text-center">
+                  <a _ngcontent-qwc-c46="" [routerLink]="['/finalapprovers',item.Production_ID]">
                     <img _ngcontent-qwc-c46="" src="assets/images/Project_new.png" alt="">
                   </a>
                 </div>

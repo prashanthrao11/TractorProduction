@@ -7,13 +7,13 @@ namespace TractorProduction.Web.Repositories
 {
     public interface IProductionUserApprovalRepository
     {
-        Task<List<ProductionUserApproval>> GetProductionUserApprovals();
+        Task<List<ProductionUserApproval>> GetProductionUserApprovals(int productionId);
         Task<ProductionUserApproval> GetProductionUserApprovalById(int? productionuserapprovalID);
         Task<ProductionUserApproval> GetProductionUserApprovalByUserId(int? productionId);
 
         Task<int> AddProductionUserApproval(ProductionUserApproval productionuserapproval);
         Task<int> DeleteProductionUserApproval(int? productionuserapprovalID);
-        Task UpdateProductionUserApproval(ProductionUserApproval productionuserapproval);
+        Task<int> UpdateProductionUserApproval(ProductionUserApproval productionuserapproval);
     }
 }
 

@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div class="row details1">
+    <div class="row details1" *ngFor="let model of Items">
       <div class="col-md-4">
         <div class="form-group">
           <label for="email">Status:</label>
@@ -58,8 +58,8 @@
         </div>
       </div>
     </div>
-    <div class="card-footer">
+    <!--<div class="card-footer">
       <button id="btnSave1" name="btnSave1" (click)="save()" class="btn-primary btn">Save Details</button>
-    </div>
+    </div>-->
   </div>
 </div>

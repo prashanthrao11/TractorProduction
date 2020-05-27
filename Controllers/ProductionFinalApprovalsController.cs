@@ -21,7 +21,7 @@ namespace TractorProduction.Web.Controllers
         }
 
         #region GET: api/ProductionFinalApproval
-        [HttpGet("ProductionFinalApproval")]
+        [HttpGet("ProductionFinalApprovals/{id}")]
         public async Task<ActionResult<IEnumerable<ProductionFinalApproval>>> Get()
         {
             try
@@ -61,8 +61,8 @@ namespace TractorProduction.Web.Controllers
         }
         #endregion
         #region PUT: api/ProjectMilestone
-        [HttpPut]
-        public async Task<ActionResult<ProductionFinalApproval>> UpdateProjectMilestone([FromBody]ProductionFinalApproval model)
+        [HttpPost("ProductionFinalApproval")]
+        public async Task<ActionResult<ProductionFinalApproval>> UpdateProductionFinalApproval([FromBody]ProductionFinalApproval model)
         {
             if (ModelState.IsValid)
             {
@@ -81,60 +81,6 @@ namespace TractorProduction.Web.Controllers
                 }
             }
             return BadRequest();
-        }
-        #endregion
-        #region POST: api/ProjectMilestone
-        [HttpPost("ProductionFinalApproval")]
-        public async Task<ActionResult<ProductionFinalApproval>> AddProjectMilestone(ProductionFinalApproval model)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var milestoneId = await _repository.AddProductionFinalApproval(model);
-
-                    if (milestoneId > 0)
-                    {
-                        return Ok(milestoneId);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new JsonException(ex.Message, ex);
-                }
-            }
-            return BadRequest();
-        }
-        #endregion
-
-        #region DELETE: api/ProjectMilestone/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<ProductionFinalApproval>> Delete(int? id)
-        {
-            int result = 0;
-
-            if (id == null)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                result = await _repository.DeleteProductionFinalApproval(id);
-                if (result == 0)
-                {
-                    return NotFound();
-                }
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                throw new JsonException(ex.Message, ex);
-            }
         }
         #endregion
     }

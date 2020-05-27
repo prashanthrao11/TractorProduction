@@ -12,9 +12,11 @@ namespace TractorProduction.Web.Services
     public class ProductionService : IProductionRepository
     {
         private readonly APIContext _context;
+        private readonly UserService _userService;
         public ProductionService(APIContext context)
         {
             _context = context;
+            _userService = new UserService(context);
         }
         public async Task<int> AddProduction(Production production)
         {
@@ -39,7 +41,7 @@ namespace TractorProduction.Web.Services
                         productionDBItem.Transmission_SAP_Series = production.Transmission_SAP_Series;
                         productionDBItem.Transmission_Series = production.Transmission_Series;
                         productionDBItem.Is_Change_Transmission = production.Is_Change_Transmission;
-                    production.Modified_By = "prashanth";
+                    production.Modified_By = _userService.GetCurrentUser().User_Name;
                     production.Modified_Date = DateTime.Now;
                     await _context.SaveChangesAsync();
 
@@ -48,7 +50,7 @@ namespace TractorProduction.Web.Services
                 else
                 {
                     production.Status_ID = _context.Status.Where(x => x.Status_Key == "ProcessInitiated").First().Status_ID;
-                    production.Created_By = "prashanth";
+                    production.Created_By = _userService.GetCurrentUser().User_Name;
                     production.Created_Date = DateTime.Now;
                     await _context.Production.AddAsync(production);
                     await _context.SaveChangesAsync();

@@ -39,6 +39,7 @@ import { PhasemilestonesdeptcolorPipe } from './Pipes/phasemilestonesdeptcolor.p
 import { ReportDashboardComponent } from './Reports/report-dashboard/report-dashboard.component';
 import { ApproversTrackerComponent } from './Reports/approvers-tracker/approvers-tracker.component';
 import { ProdApproveInfoPipe } from './Pipes/prod-approve-info.pipe';
+import { FinalApproversTrackerComponent } from './Reports/final-approvers-tracker/final-approvers-tracker.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { ProdApproveInfoPipe } from './Pipes/prod-approve-info.pipe';
     PhasemilestonesdeptcolorPipe,
     ReportDashboardComponent,
     ApproversTrackerComponent,
-    ProdApproveInfoPipe
+    ProdApproveInfoPipe,
+    FinalApproversTrackerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -100,7 +102,8 @@ import { ProdApproveInfoPipe } from './Pipes/prod-approve-info.pipe';
       { path: 'manageapprovers', component: WorkflowApproversComponent },
 
       { path: 'milestonetracker/:id', component: MilestoneTrackerComponent },
-      { path: 'approvertracker/:id', component: ApproversTrackerComponent }
+      { path: 'approvertracker/:id', component: ApproversTrackerComponent },
+      { path: 'finalapproverstracker/:id', component: FinalApproversTrackerComponent }
     ])
   ],
   providers: [DatePipe],

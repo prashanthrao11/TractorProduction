@@ -22,7 +22,7 @@ export class ProductionapprovalsService {
     );
   }
   save(model): Observable<any> {
-    return this.httpClient.post(environment.api_url + "ProductionApproval/ProductionApproval", model).pipe(
+    return this.httpClient.post(environment.api_url + "ProductionApprovals/ProductionApproval", model).pipe(
       map(item => item ? item : [])
     );
   }

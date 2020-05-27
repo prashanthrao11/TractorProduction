@@ -40,6 +40,26 @@ namespace TractorProduction.Web.Controllers
             }
         }
         #endregion
+        #region GET: api/CurrentUser
+        [HttpGet("CurrentUser")]
+        public async Task<ActionResult<UserVM>> GetCurrentUser()
+        {
+            try
+            {
+                var result = await _repository.CurrentUser();
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new JsonException(ex.Message, ex);
+            }
+        }
+        #endregion
         #region GET: api/User/2
         [HttpGet("User/{id}")]
         public async Task<ActionResult<IEnumerable<UserVM>>> GetById(int id)

@@ -40,11 +40,12 @@ namespace TractorProduction.Web.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ProductionUserApproval> GetProductionUserApprovalById(int? productionuserapprovalID)
+        public async Task<ProductionUserApproval> GetProductionUserApprovalById(int? productionId)
         {
             if (_context != null)
             {
-                return await _context.ProductionUserApproval.Where(x => x.P_U_Approval_ID == productionuserapprovalID).FirstOrDefaultAsync();
+                int userRoleId = _userService.GetCurrentUser().Role_ID;
+                return await _context.ProductionUserApproval.Where(x => x.Production_ID == productionId && x.Role_ID==_userService.GetCurrentUser().Role_ID).FirstOrDefaultAsync();
             }
             return null;
         }
@@ -67,9 +68,36 @@ namespace TractorProduction.Web.Services
             return null;
         }
 
-        public Task UpdateProductionUserApproval(ProductionUserApproval productionuserapproval)
+        public async Task<int> UpdateProductionUserApproval(ProductionUserApproval productionuserapproval)
         {
-            throw new NotImplementedException();
+            if (_context != null)
+            {
+                if (productionuserapproval.P_U_Approval_ID != 0)
+                {
+                    var item = _context.ProductionUserApproval.Find(productionuserapproval.P_U_Approval_ID);
+                    item.Comments = productionuserapproval.Comments;
+                    item.Status_ID = productionuserapproval.Status_ID;
+                    item.Submitted_By_ID = _userService.GetCurrentUser().User_ID;
+                    await _context.SaveChangesAsync();
+               
+
+                CheckAndUpdateStatus(productionuserapproval.Production_ID);
+
+                return productionuserapproval.P_U_Approval_ID;
+                }
+            }
+            return 0;
+        }
+        private void CheckAndUpdateStatus(int id)
+        {
+            if (_context.ProductionUserApproval.Where(x => x.Production_ID == id && x.Status_ID == 0).Count() == 0)
+            {
+                var production = _context.Production.Where(x => x.Production_ID == id).First();
+                production.Status_ID = _context.Status.Where(x => x.Status_Key == "Approved").First().Status_ID;
+                production.Modified_By = _userService.GetCurrentUser().User_Name;
+                production.Modified_Date = DateTime.Now;
+                _context.SaveChanges();
+            }
         }
     }
 }

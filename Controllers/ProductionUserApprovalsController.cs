@@ -20,13 +20,13 @@ namespace TractorProduction.Web.Controllers
             _repository = repository;
         }
 
-        #region GET: api/Production
-        [HttpGet("Production")]
-        public async Task<ActionResult<IEnumerable<ProductionUserApproval>>> Get()
+        #region GET: api/ProductionUserApprovals
+        [HttpGet("ProductionUserApprovals/{id}")]
+        public async Task<ActionResult<IEnumerable<ProductionUserApproval>>> GetProductionUserApprovals(int id)
         {
             try
             {
-                var result = await _repository.GetProductionUserApprovals();
+                var result = await _repository.GetProductionUserApprovals(id);
                 if (result == null)
                 {
                     return NotFound();
@@ -42,11 +42,11 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region GET: api/ProductionUserApproval/2
         [HttpGet("ProductionUserApproval/{id}")]
-        public async Task<ActionResult<IEnumerable<ProductionUserApproval>>> GetById(int id)
+        public async Task<ActionResult<IEnumerable<ProductionUserApproval>>> GetProductionUserApprovalByUserId(int id)
         {
             try
             {
-                var result = await _repository.GetProductionUserApprovalById(id);
+                var result = await _repository.GetProductionUserApprovalByUserId(id);
                 if (result == null)
                 {
                     return NotFound();
@@ -61,8 +61,8 @@ namespace TractorProduction.Web.Controllers
         }
         #endregion
         #region PUT: api/ProjectMilestone
-        [HttpPut]
-        public async Task<ActionResult<ProductionUserApproval>> UpdateProjectMilestone([FromBody]ProductionUserApproval model)
+        [HttpPost("ProductionFinalApproval")]
+        public async Task<ActionResult<ProductionFinalApproval>> UpdateProductionUserApproval([FromBody]ProductionUserApproval model)
         {
             if (ModelState.IsValid)
             {
@@ -83,59 +83,6 @@ namespace TractorProduction.Web.Controllers
             return BadRequest();
         }
         #endregion
-        #region POST: api/ProjectMilestone
-        [HttpPost("ProductionUserApproval")]
-        public async Task<ActionResult<ProductionUserApproval>> AddProjectMilestone(ProductionUserApproval model)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var milestoneId = await _repository.AddProductionUserApproval(model);
-
-                    if (milestoneId > 0)
-                    {
-                        return Ok(milestoneId);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new JsonException(ex.Message, ex);
-                }
-            }
-            return BadRequest();
-        }
-        #endregion
-
-        #region DELETE: api/ProjectMilestone/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<ProductionUserApproval>> Delete(int? id)
-        {
-            int result = 0;
-
-            if (id == null)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                result = await _repository.DeleteProductionUserApproval(id);
-                if (result == 0)
-                {
-                    return NotFound();
-                }
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                throw new JsonException(ex.Message, ex);
-            }
-        }
-        #endregion
+      
     }
 }

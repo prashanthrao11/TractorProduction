@@ -138,13 +138,33 @@ namespace TractorProduction.Web.Services
             }
             return null;
         }
+        public async Task<UserVM> CurrentUser()
+        {
+            var userName = "prashanth.s@gmail.com";
+            var user = await _context.User.Where(x => x.Email == userName).FirstAsync();
+            var userRole = await _context.UserRole.Where(x => x.User_ID == user.User_ID).FirstAsync();
+            var role = await _context.Role.Where(x => x.Role_ID == userRole.Role_ID).FirstAsync();
+            return new UserVM()
+            {
+                User_ID = user.User_ID,
+                User_Name = user.User_Name,
+                Email = user.Email,
+                Role_ID = userRole.Role_ID,
+                Role_Name = role.Role_Name
+            };
+        }
         public User GetCurrentUser()
         {
-            User user = new User();
-            user.User_ID = 1;
-            user.Role_ID = 7;
-            user.User_Name = "prashanth";
-            return user;
+            var userName = "prashanth.s@gmail.com";
+            var user = _context.User.Where(x=>x.Email==userName).First();
+            var userRole = _context.UserRole.Where(x => x.User_ID == user.User_ID).First();
+            return new User()
+            {
+                User_ID = user.User_ID,
+                User_Name = user.User_Name,
+                Email = user.Email,
+                Role_ID = userRole.Role_ID
+            };
         }
     }
 }
