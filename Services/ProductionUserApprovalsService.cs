@@ -78,6 +78,8 @@ namespace TractorProduction.Web.Services
                     item.Comments = productionuserapproval.Comments;
                     item.Status_ID = productionuserapproval.Status_ID;
                     item.Submitted_By_ID = _userService.GetCurrentUser().User_ID;
+                    item.Modified_By = _userService.GetCurrentUser().User_Name;
+                    item.Modified_Date = DateTime.Now;
                     await _context.SaveChangesAsync();
                
 

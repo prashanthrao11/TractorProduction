@@ -47,14 +47,16 @@ export class ManageUserComponent implements OnInit {
   }
   editItem(item) {
     this.model = item;
-    console.log(this.model.DepartmentIds);
+    this.deptItems.forEach(x => {
+      x.IsSelected = false
+    });
     this.deptItems.forEach(x => {
       if (this.model.DepartmentIds.indexOf(x.Department_ID.toString(), 0) > -1) {
         x.IsSelected = true;
-        console.log(x.Department_ID.toString());
+      } else {
+        x.IsSelected = false;
       }
     });
-    console.log(this.deptItems);
   }
   save() {
     this.model.Role_ID = parseInt(this.model.Role_ID.toString());

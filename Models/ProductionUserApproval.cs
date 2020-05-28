@@ -18,5 +18,7 @@ namespace TractorProduction.Web.Models
 
         public int? Status_ID { get; set; }
         public string Comments { get; set; }
+        public string Modified_By { get; set; }
+        public DateTime? Modified_Date { get; set; }
     }
 }

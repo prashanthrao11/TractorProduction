@@ -23,4 +23,5 @@ export class ProductionMilestone {
   Is_Active: boolean;
   TargetDate: Date;
   ActualDate: Date;
+  Modified_By: string;
 }

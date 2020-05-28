@@ -37,6 +37,8 @@ namespace TractorProduction.Web.Services
                     {
                         item.Comments = localItem.ProdMilestoneItem.Comments;
                         item.Status_ID = localItem.ProdMilestoneItem.Status_ID;
+                        item.Modified_By = _userService.GetCurrentUser().User_Name;
+                        item.Modified_Date = DateTime.Now;
                         if (localItem.ProdMilestoneItem.Status_ID == 1 && localItem.ProdMilestoneItem.ActualDate==null)
                         {
                             item.ActualDate = DateTime.Now;
@@ -95,7 +97,9 @@ namespace TractorProduction.Web.Services
                                       Production_ID=pm.Production_ID,
                                       TargetDate=pm.TargetDate,
                                       ActualDate=pm.ActualDate,
-                                      Is_Active=pm.Is_Active
+                                      Is_Active=pm.Is_Active,
+                                      Modified_By=pm.Modified_By,
+                                      Modified_Date=pm.Modified_Date
                                   },
                                   DeptItem=new Department()
                                   {

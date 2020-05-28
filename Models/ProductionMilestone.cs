@@ -20,6 +20,8 @@ namespace TractorProduction.Web.Models
         public string Comments { get; set; }
 
         public bool Is_Active{get;set;}
+        public string Modified_By { get; set; }
+        public DateTime? Modified_Date { get; set; }
     }
 
     public class ProductionMilestoneVM

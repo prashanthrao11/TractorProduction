@@ -15,7 +15,7 @@ export class PhasemilestonesdeptstatusPipe implements PipeTransform {
 
     if (milestone != null && milestone != undefined) {
       if (milestone.ProdMilestoneItem.ActualDate != null)
-        return this.datePipe.transform(milestone.ProdMilestoneItem.ActualDate, "MMMM d, y");
+        return this.datePipe.transform(milestone.ProdMilestoneItem.ActualDate, "MMMM d, y") + ' - ' + milestone.ProdMilestoneItem.Modified_By
       else
         return "";
       //return "test";
