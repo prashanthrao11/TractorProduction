@@ -12,6 +12,8 @@
     </div>
   </div>
   <div class="card-body">
+    <productioncard [Production_ID]="model.Production_ID"></productioncard>
+    <br />
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -44,7 +46,8 @@
           <td [ngClass]="{'greencolor':item.ProdMilestoneItem|colorCode:'greencolor',
               'redcolor':item.ProdMilestoneItem|colorCode:'redcolor',
               'yellowcolor':item.ProdMilestoneItem|colorCode:'yellowcolor'}">
-          {{item.ProdMilestoneItem.ActualDate|date}}</td>
+            {{item.ProdMilestoneItem.ActualDate|date}}
+          </td>
           <td>
             <app-attachment-grid [isEnabled]="item.IsDepartmentUser" [groupName]="'Milestone'" [prodmilestoneId]="item.ProdMilestoneItem.P_Approval_ID"></app-attachment-grid>
           </td>

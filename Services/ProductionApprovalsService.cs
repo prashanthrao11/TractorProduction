@@ -47,7 +47,7 @@ namespace TractorProduction.Web.Services
             if (_context != null)
             {
                 int userId = _userService.GetCurrentUser().User_ID;
-                return await (from pa in _context.ProductionApproval.Where(x => x.Production_ID == productionId)
+                var result = await (from pa in _context.ProductionApproval.Where(x => x.Production_ID == productionId)
                               from d in _context.Department.Where(x => pa.Department_ID == x.Department_ID)
                               from r in _context.Role.Where(x => x.Role_ID == pa.Role_ID)
                               from du in _context.DepartmentUsers.Where(x => x.Department_ID == d.Department_ID && x.Is_Active==true)
@@ -62,8 +62,14 @@ namespace TractorProduction.Web.Services
                                Department_ID=pa.Department_ID,
                                DepartmentName=d.Department_Name,
                                RoleName=r.Role_Name,
-                               Is_Active=pa.Is_Active
+                               Is_Active=pa.Is_Active,
+                               Modified_By=pa.Modified_By,
                               }).ToListAsync();
+                result.ForEach(x => {
+                    if (x.Action_Status_ID == 0) x.Action_Status = "";
+                    else if (x.Action_Status_ID == 1) x.Action_Status = "Approved"; else x.Action_Status = "Rejected";
+                });
+                return result;
 
             }
             return null;
@@ -73,7 +79,7 @@ namespace TractorProduction.Web.Services
             if (_context != null)
             {
                 int userId = _userService.GetCurrentUser().User_ID;
-                return await (from pa in _context.ProductionApproval.Where(x => x.Production_ID == productionId)
+                var result = await (from pa in _context.ProductionApproval.Where(x => x.Production_ID == productionId)
                               from d in _context.Department.Where(x => pa.Department_ID == x.Department_ID)
                               from r in _context.Role.Where(x => x.Role_ID == pa.Role_ID)
                               from du in _context.DepartmentUsers.Where(x => x.Department_ID == d.Department_ID && x.Is_Active == true)
@@ -89,9 +95,14 @@ namespace TractorProduction.Web.Services
                                   Action_Comments=pa.Action_Comments,
                                   Is_Active = pa.Is_Active,
                                   Action_Status_ID = pa.Action_Status_ID,
-                                  Action_Date =pa.Action_Date
+                                  Action_Date =pa.Action_Date,
+                                  Modified_By=pa.Modified_By
                               }).ToListAsync();
-
+                 result.ForEach(x => {
+                    if (x.Action_Status_ID == 0) x.Action_Status = "";
+                    else if (x.Action_Status_ID == 1) x.Action_Status = "Approved"; else x.Action_Status="Rejected";
+                });
+                return result;
             }
             return null;
         }

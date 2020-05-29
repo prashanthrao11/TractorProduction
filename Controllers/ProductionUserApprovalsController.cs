@@ -47,11 +47,6 @@ namespace TractorProduction.Web.Controllers
             try
             {
                 var result = await _repository.GetProductionUserApprovalByUserId(id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-
                 return Ok(result);
             }
             catch (Exception ex)

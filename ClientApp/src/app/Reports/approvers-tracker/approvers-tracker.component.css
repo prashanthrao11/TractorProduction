@@ -1,0 +1,85 @@
+.customcard {
+  font-size: 0.7rem;
+}
+
+.card-header {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.form-control {
+  font-size: 0.7rem;
+}
+
+.box-green {
+  min-height: 20px;
+  max-height: 10px;
+  min-width: 10px;
+  max-width: 10px;
+  background-color: green;
+  border: 1px solid green;
+}
+
+.box-yellow {
+  min-height: 20px;
+  max-height: 10px;
+  min-width: 10px;
+  max-width: 10px;
+  background-color: yellow;
+  border: 1px solid yellow;
+}
+
+.box-red {
+  min-height: 20px;
+  max-height: 10px;
+  min-width: 10px;
+  max-width: 10px;
+  background-color: red;
+  border: 1px solid red;
+}
+
+.milestoneColor {
+  margin-top: 10px;
+}
+
+.table td, .table th {
+  padding: .35rem !important;
+}
+.row{
+    margin-left:5px;
+    padding-bottom:2px;
+}
+.greencolor {
+  background-color: green;
+  color: white;
+}
+
+.redcolor {
+  background-color: red;
+  color: white;
+}
+
+.yellowcolor {
+  background-color: yellow;
+  color: black;
+}
+.details {
+  padding: 5px;
+}
+
+.details1 {
+  padding: 5px;
+  margin-top: 15px;
+}
+
+.maincard {
+  background-color: antiquewhite;
+  padding: 5px;
+}
+
+.dashedline {
+  width: 98%;
+  min-height: 1px;
+  border: 1px solid lightgrey;
+  border-style: dashed;
+}

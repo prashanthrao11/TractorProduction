@@ -6,6 +6,8 @@ import { ProductionmilestonesService } from '../../Services/productionmilestones
 import { FileuploadService } from '../../Services/fileupload.service';
 import { DepartmentModel } from '../../Models/department-model';
 import { PhaseModel } from '../../Models/phase-model';
+import { ProductionService } from '../../Services/production.service';
+import { ProductionRequestModel } from '../../Models/production-request-model';
 
 @Component({
   selector: 'app-milestone-tracker',
@@ -17,19 +19,28 @@ export class MilestoneTrackerComponent implements OnInit {
   model: ProductionMilestonesModel;
   deptItems: DepartmentModel[] = [];
   phaseItems: PhaseModel[] = [];
+  prodItem: ProductionRequestModel;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private alertMessage: AlertMessageService,
     private service: ProductionmilestonesService,
+    private prodService: ProductionService,
     private fileUploadService: FileuploadService
   ) {
     this.model = new ProductionMilestonesModel();
+    this.prodItem = new ProductionRequestModel();
     this.route.params.subscribe(params => { this.model.Production_ID = params['id']; });
   }
 
   ngOnInit() {
     this.loadProductionMilestones();
+    this.loadProduction();
+  }
+  loadProduction() {
+    this.prodService.getById(this.model.Production_ID).subscribe(data => {
+      this.prodItem = data;
+    });
   }
   save() {
     this.model.Production_ID = parseInt(this.model.Production_ID.toString());

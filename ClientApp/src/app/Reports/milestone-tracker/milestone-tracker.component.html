@@ -1,9 +1,9 @@
+
 <div class="card customcard" style="width:98%">
   <div class="card-header">
     <div class="row">
       <div class="col-md-4">
         <strong>Production Milestones</strong>
-        <button id="btnSave" (click)="save()" name="btnSave" class="btn-primary btn ml-5">Save</button>
       </div>
       <div class="col-md-8 row milestoneColor">
         <div class="box-green col-md-1"></div><div class="col-md-2">Completed</div>
@@ -13,6 +13,8 @@
     </div>
   </div>
   <div class="card-body">
+    <productioncard [Production_ID]="model.Production_ID"></productioncard>
+    <br />
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -41,8 +43,5 @@
         <tr>
       </tbody>
     </table>
-  </div>
-  <div class="card-footer">
-    <button id="btnSave1" name="btnSave1" (click)="save()" class="btn-primary btn ml-5">Save</button>
   </div>
 </div>

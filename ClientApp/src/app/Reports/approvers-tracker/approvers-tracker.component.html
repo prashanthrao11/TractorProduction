@@ -1,3 +1,4 @@
+
 <div class="card customcard" style="width:98%">
   <div class="card-header">
     <div class="row">
@@ -12,6 +13,7 @@
     </div>
   </div>
   <div class="card-body">
+    <productioncard [Production_ID]="model.Production_ID"></productioncard><br />
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -23,9 +25,32 @@
       </thead>
       <tbody>
         <tr *ngFor="let dItem of deptItems">
-          <td>{{dItem.Department_Name}}</td>
+          <td><strong>{{dItem.Department_Name}}</strong></td>
           <td *ngFor="let rItem of roleItems">
-            {{model.Items|prodApproveInfo:dItem.Department_ID:rItem.Role_ID}}
+            <div class="row">
+              <strong>Action By:</strong>
+            </div>
+            <div class="row">
+              {{(model.Items|approverItem:dItem.Department_ID:rItem.Role_ID).Modified_By}}
+            </div>
+            <div class="row">
+              <strong>Action Status:</strong>
+            </div>
+            <div class="row">
+              {{(model.Items|approverItem:dItem.Department_ID:rItem.Role_ID).Action_Status}}
+            </div>
+            <div class="row">
+              <strong>Action Comments:</strong>
+            </div>
+            <div class="row">
+              {{model.Items|prodApproveInfo:dItem.Department_ID:rItem.Role_ID}}
+            </div>
+            <div class="row">
+              <strong>Action Date:</strong>
+            </div>
+            <div class="row">
+              {{(model.Items|approverItem:dItem.Department_ID:rItem.Role_ID).Action_Date|date}}
+            </div>
           </td>
         </tr>
       </tbody>

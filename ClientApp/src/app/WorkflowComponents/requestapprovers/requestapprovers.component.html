@@ -3,37 +3,7 @@
     <strong>Production User Approvals</strong>
   </div>
   <div class="card-body">
-    <div class="card maincard">
-      <div class="row details">
-        <div class="col-md-3">
-          <b>Tractor : </b>{{prodItem.Tractor_Part_Number}}
-        </div>
-        <div class="col-md-3">
-          <b>Engine : </b>{{prodItem.Engine_Part_Number}}
-        </div>
-        <div class="col-md-3">
-          <b>Transmission : </b>{{prodItem.Transmission_Part_Number}}
-        </div>
-        <div class="col-md-3">
-          <b>Hydraulics : </b>{{prodItem.Hydraulics_Part_Number}}
-        </div>
-        <div *ngIf="(prodItem.Status=='Process Initiated')" class="col-md-3 processInitiated">
-          <b>Status : </b>{{prodItem.Status}}
-        </div>
-        <div *ngIf="(prodItem.Status=='Awaiting Approval')" class="col-md-3 AwaitingApproval">
-          <b>Status : </b>{{prodItem.Status}}
-        </div>
-        <div *ngIf="(prodItem.Status=='Awaiting Final Approval')" class="col-md-3 AwaitingFinalApproval">
-          <b>Status : </b>{{prodItem.Status}}
-        </div>
-        <div class="col-md-3">
-          <b>Created By :</b> {{prodItem.Created_By}}
-        </div>
-        <div class="col-md-3">
-          <b>Created On : </b>{{prodItem.Created_Date | date:'medium'}}
-        </div>
-      </div>
-    </div>
+    <productioncard [Production_ID]="model.Production_ID"></productioncard>
     <div class="row details1" *ngFor="let item of model.Items">
       <div class="col-md-2">
         <b>{{item.DepartmentName}}</b>

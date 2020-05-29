@@ -40,6 +40,8 @@ import { ReportDashboardComponent } from './Reports/report-dashboard/report-dash
 import { ApproversTrackerComponent } from './Reports/approvers-tracker/approvers-tracker.component';
 import { ProdApproveInfoPipe } from './Pipes/prod-approve-info.pipe';
 import { FinalApproversTrackerComponent } from './Reports/final-approvers-tracker/final-approvers-tracker.component';
+import { ApproverItemPipe } from './Pipes/approver-item.pipe';
+import { ProductioncardComponent } from './productioncard/productioncard.component';
 
 
 @NgModule({
@@ -70,7 +72,9 @@ import { FinalApproversTrackerComponent } from './Reports/final-approvers-tracke
     ReportDashboardComponent,
     ApproversTrackerComponent,
     ProdApproveInfoPipe,
-    FinalApproversTrackerComponent
+    FinalApproversTrackerComponent,
+    ApproverItemPipe,
+    ProductioncardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

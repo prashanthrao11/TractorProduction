@@ -14,8 +14,6 @@ import { Rolemodel } from '../../Models/rolemodel';
   styleUrls: ['./approvers-tracker.component.css']
 })
 export class ApproversTrackerComponent implements OnInit {
-
-
   model: ProductionapproverVM;
   prodItem: ProductionRequestModel;
   deptItems: DepartmentModel[] = [];
@@ -53,14 +51,11 @@ export class ApproversTrackerComponent implements OnInit {
           this.roleItems.push(rItem);
         }
       });
-      console.log(this.deptItems);
-      console.log(this.roleItems);
     });
   }
   loadProdItem() {
     this.prodService.getById(this.model.Production_ID).subscribe(data => {
       this.prodItem = data;
-      console.log(data);
     });
   }
 }

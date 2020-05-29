@@ -6,10 +6,12 @@ export class Productionapprover {
   Action_By: string;
   Action_Date: Date;
   Action_Status_ID: number;
+  Action_Status:string;
   Action_Comments: string;
   Is_Active: boolean;
   DepartmentName: string; 
   RoleName: string;
+  Modified_By: string;
 }
 
 export class ProductionapproverVM {

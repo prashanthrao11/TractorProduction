@@ -43,9 +43,12 @@ export class RequestfinalapproversComponent implements OnInit {
   }
   loadData() {
     this.service.getById(this.model.Production_ID).subscribe(data => {
-      console.log(data);
       this.model = data;
-      this.isLoaded = true;
+      console.log("test");
+      console.log(this.model);
+      if (this.model != null && this.model != undefined && data.length>0) {
+        this.isLoaded = true;
+      }
     });
   }
   loadProdItem() {

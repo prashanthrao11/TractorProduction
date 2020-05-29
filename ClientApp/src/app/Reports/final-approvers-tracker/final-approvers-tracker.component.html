@@ -3,39 +3,21 @@
     <strong>Production User Approvals</strong>
   </div>
   <div class="card-body">
-    <div class="card maincard">
-      <div class="row details">
-        <div class="col-md-3">
-          <b>Tractor : </b>{{prodItem.Tractor_Part_Number}}
-        </div>
-        <div class="col-md-3">
-          <b>Engine : </b>{{prodItem.Engine_Part_Number}}
-        </div>
-        <div class="col-md-3">
-          <b>Transmission : </b>{{prodItem.Transmission_Part_Number}}
-        </div>
-        <div class="col-md-3">
-          <b>Hydraulics : </b>{{prodItem.Hydraulics_Part_Number}}
-        </div>
-        <div *ngIf="(prodItem.Status=='Process Initiated')" class="col-md-3 processInitiated">
-          <b>Status : </b>{{prodItem.Status}}
-        </div>
-        <div *ngIf="(prodItem.Status=='Awaiting Approval')" class="col-md-3 AwaitingApproval">
-          <b>Status : </b>{{prodItem.Status}}
-        </div>
-        <div *ngIf="(prodItem.Status=='Awaiting Final Approval')" class="col-md-3 AwaitingFinalApproval">
-          <b>Status : </b>{{prodItem.Status}}
-        </div>
-        <div class="col-md-3">
-          <b>Created By :</b> {{prodItem.Created_By}}
-        </div>
-        <div class="col-md-3">
-          <b>Created On : </b>{{prodItem.Created_Date | date:'medium'}}
+    <productioncard [Production_ID]="productionId"></productioncard><br />
+    <div class="row details1" *ngFor="let model of Items">
+      <div class="col-md-1">
+        <div class="form-group">
+          <label for="email">Role:</label><br />
+          <strong>{{model.Role_ID==7?'DRDS Manager':'QA Head'}}</strong>
         </div>
       </div>
-    </div>
-    <div class="row details1" *ngFor="let model of Items">
-      <div class="col-md-4">
+      <div class="col-md-1">
+        <div class="form-group">
+          <label for="email">Action By:</label><br />
+          <strong>{{model.Modified_By}}</strong>
+        </div>
+      </div>
+      <div class="col-md-2">
         <div class="form-group">
           <label for="email">Status:</label>
           <select class="form-control" [(ngModel)]="model.Status_ID">
