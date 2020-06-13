@@ -18,6 +18,7 @@ namespace TractorProduction.Web.Models
         public string Action_By { get; set; }
         public DateTime? Action_Date { get; set; }
         public int Action_Status_ID { get; set; }
+        [NotMapped]
         public string Action_Status { get; set; }
         public string Action_Comments { get; set; }
         public bool Is_Active { get; set; }

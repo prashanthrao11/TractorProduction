@@ -83,7 +83,11 @@ import { ProductioncardComponent } from './productioncard/productioncard.compone
     DropdownModule,
     CalendarModule,
     NgxUiLoaderModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-top-full-width',
+      preventDuplicates: true
+    }),
     NgxUiLoaderHttpModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
