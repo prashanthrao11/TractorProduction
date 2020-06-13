@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   ) { }
   title = 'app';
   ngOnInit() {
+    console.log("phase2..");
      this.userService.getCurrentUser().subscribe(data => {
       this.router.initialNavigation();
     });
