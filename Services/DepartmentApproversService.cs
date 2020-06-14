@@ -9,40 +9,53 @@ using TractorProduction.Web.Repositories;
 
 namespace TractorProduction.Web.Services
 {
-    public class DepartmentApproversService : IDepartmentApproverRepository
+    public class DepartmentApproversService : BaseService, IDepartmentApproverRepository
     {
-        private readonly APIContext _context;
-        public DepartmentApproversService(APIContext context)
+        public DepartmentApproversService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public async Task<List<DepartmentApprover>> GetDepartmentApprovers(int workflowId)
+        public async Task<Response<List<DepartmentApprover>>> GetDepartmentApprovers(int workflowId)
         {
-            if (_context != null)
+            try
             {
-                return await _context.DepartmentApprover.Where(x=>x.Workflow_ID==workflowId && x.Is_Active==true).ToListAsync();
-            }
-            return null;
-        }
-        public async Task<int> UpdateDepartmentApprovers(DepartmentApproversVM model)
-        {
-            int success = 0;
-            List<DepartmentApprover> newList = new List<DepartmentApprover>();
-            if (_context != null)
-            {
-                var list = await _context.DepartmentApprover.Where(x => x.Workflow_ID == model.Workflow_ID && x.Is_Active==true).ToListAsync();
-                foreach(var item in list)
+                var model = await _context.DepartmentApprover.Where(x => x.Workflow_ID == workflowId && x.Is_Active == true).ToListAsync();
+                return new Response<List<DepartmentApprover>>()
                 {
-                    if(!model.DepartmentApproverItems.Any(x=>x.Department_ID==item.Department_ID && x.Role_ID==item.Role_ID && item.Is_Active == true))
+                    IsSuccess = true,
+                    Model = model
+                };
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<DepartmentApprover>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+        public async Task<Response<int>> UpdateDepartmentApprovers(DepartmentApproversVM model)
+        {
+            try
+            {
+                int success = 0;
+                List<DepartmentApprover> newList = new List<DepartmentApprover>();
+
+                var list = await _context.DepartmentApprover.Where(x => x.Workflow_ID == model.Workflow_ID && x.Is_Active == true).ToListAsync();
+                foreach (var item in list)
+                {
+                    if (!model.DepartmentApproverItems.Any(x => x.Department_ID == item.Department_ID && x.Role_ID == item.Role_ID && item.Is_Active == true))
                     {
                         item.Is_Active = false;
                     }
                 }
                 await _context.SaveChangesAsync();
-                foreach(var item in model.DepartmentApproverItems)
+                foreach (var item in model.DepartmentApproverItems)
                 {
                     var _tempItem = list.Where(x => x.Department_ID == item.Department_ID && x.Role_ID == item.Role_ID && x.Workflow_ID == item.Workflow_ID).FirstOrDefault();
-                    if (_tempItem==null)
+                    if (_tempItem == null)
                     {
                         item.Is_Active = true;
                         newList.Add(item);
@@ -57,8 +70,21 @@ namespace TractorProduction.Web.Services
                 }
                 _context.DepartmentApprover.AddRange(newList);
                 await _context.SaveChangesAsync();
+                return new Response<int>()
+                {
+                    IsSuccess = true,
+                    Model = success
+                };
             }
-            return success;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<int>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
     }
 }

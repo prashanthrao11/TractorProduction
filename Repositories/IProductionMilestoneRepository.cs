@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using TractorProduction.Web.Models;
 namespace TractorProduction.Web.Repositories
 {
-    public interface IProductionMilestoneRepository
+    public interface IProductionMilestoneRepository : IDisposable
     {
-        Task<List<ProductionMilestoneVM>> GetProductionMilestones(int productionId);
+        Task<Response<List<ProductionMilestoneVM>>> GetProductionMilestones(int productionId);
       
-        Task<int> UpdateProductionMilestone(ProductionMilestonesVM list);
+        Task<Response<int>> UpdateProductionMilestone(ProductionMilestonesVM list);
     }
 }

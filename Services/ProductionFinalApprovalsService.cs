@@ -8,48 +8,88 @@ using TractorProduction.Web.Models;
 using TractorProduction.Web.Repositories;
 namespace TractorProduction.Web.Services
 {
-    public class ProductionFinalApprovalsService : IProductionFinalApprovalRepository
+    public class ProductionFinalApprovalsService : BaseService, IProductionFinalApprovalRepository
     {
-        private readonly APIContext _context;
-        public ProductionFinalApprovalsService(APIContext context)
+       
+
+        public ProductionFinalApprovalsService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public async Task<int> AddProductionFinalApproval(ProductionFinalApproval productionfinalapproval)
+        public async Task<Response<int>> AddProductionFinalApproval(ProductionFinalApproval productionfinalapproval)
         {
-            if (_context != null)
+            try
             {
                 await _context.ProductionFinalApproval.AddAsync(productionfinalapproval);
                 await _context.SaveChangesAsync();
-                return productionfinalapproval.Final_Approval_ID;
+                var model = productionfinalapproval.Final_Approval_ID;
+                return new Response<int>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return 0;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<int>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task<int> DeleteProductionFinalApproval(int? productionfinalapprovalID)
+        public Task<Response<int>> DeleteProductionFinalApproval(int? productionfinalapprovalID)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ProductionFinalApproval> GetProductionFinalApprovalById(int? productionfinalapprovalID)
+        public async Task<Response<ProductionFinalApproval>> GetProductionFinalApprovalById(int? productionfinalapprovalID)
         {
-            if (_context != null)
+            try
             {
-                return await _context.ProductionFinalApproval.Where(x => x.Final_Approval_ID == productionfinalapprovalID).FirstOrDefaultAsync();
+                var model = await _context.ProductionFinalApproval.Where(x => x.Final_Approval_ID == productionfinalapprovalID).FirstOrDefaultAsync();
+                return new Response<ProductionFinalApproval>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<ProductionFinalApproval>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public async Task<List<ProductionFinalApproval>> GetProductionFinalApprovals()
+        public async Task<Response<List<ProductionFinalApproval>>> GetProductionFinalApprovals()
         {
-            if (_context != null)
+            try
             {
-                return await _context.ProductionFinalApproval.ToListAsync();
+                var model = await _context.ProductionFinalApproval.ToListAsync();
+                return new Response<List<ProductionFinalApproval>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<ProductionFinalApproval>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task UpdateProductionFinalApproval(ProductionFinalApproval productionFinalapproval)
+        public Task<Response<bool>> UpdateProductionFinalApproval(ProductionFinalApproval productionFinalapproval)
         {
             throw new NotImplementedException();
         }

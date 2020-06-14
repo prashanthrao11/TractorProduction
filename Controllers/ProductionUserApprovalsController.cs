@@ -22,7 +22,7 @@ namespace TractorProduction.Web.Controllers
 
         #region GET: api/ProductionUserApprovals
         [HttpGet("ProductionUserApprovals/{id}")]
-        public async Task<ActionResult<IEnumerable<ProductionUserApproval>>> GetProductionUserApprovals(int id)
+        public async Task<ActionResult> GetProductionUserApprovals(int id)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region GET: api/ProductionUserApproval/2
         [HttpGet("ProductionUserApproval/{id}")]
-        public async Task<ActionResult<IEnumerable<ProductionUserApproval>>> GetProductionUserApprovalByUserId(int id)
+        public async Task<ActionResult> GetProductionUserApprovalByUserId(int id)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region PUT: api/ProjectMilestone
         [HttpPost("ProductionFinalApproval")]
-        public async Task<ActionResult<ProductionFinalApproval>> UpdateProductionUserApproval([FromBody]ProductionUserApproval model)
+        public async Task<ActionResult> UpdateProductionUserApproval([FromBody]ProductionUserApproval model)
         {
             if (ModelState.IsValid)
             {

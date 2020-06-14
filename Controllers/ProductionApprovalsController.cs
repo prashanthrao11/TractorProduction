@@ -23,7 +23,7 @@ namespace TractorProduction.Web.Controllers
         
         #region GET: api/ProductionApproval/2
         [HttpGet("ProductionApproval/{id}")]
-        public async Task<ActionResult<IEnumerable<ProductionApproval>>> GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region GET: api/ProductionApproval/2
         [HttpGet("ProductionUserApproval/{id}")]
-        public async Task<ActionResult<IEnumerable<ProductionApproval>>> GetUserById(int id)
+        public async Task<ActionResult> GetUserById(int id)
         {
             try
             {
@@ -64,27 +64,11 @@ namespace TractorProduction.Web.Controllers
 
         #region POST: api/ProjectMilestone
         [HttpPost("ProductionApproval")]
-        public async Task<ActionResult<ProductionApproval>> UpdateProjectMilestone(ProductionApprovalVM model)
+        public async Task<ActionResult> UpdateProjectMilestone(ProductionApprovalVM model)
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var milestoneId = await _repository.UpdateProductionApprovals(model);
-
-                    if (milestoneId > 0)
-                    {
-                        return Ok(milestoneId);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new JsonException(ex.Message, ex);
-                }
+                return Ok(await _repository.UpdateProductionApprovals(model));
             }
             return BadRequest();
         }

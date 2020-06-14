@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using TractorProduction.Web.Models;
 namespace TractorProduction.Web.Repositories
 {
-   public interface IEmailTemplateRepository
+   public interface IEmailTemplateRepository : IDisposable
     {
-        Task<List<EmailTemplate>> GetEmailTemplates();
-        Task<EmailTemplate> GetEmailTemplateById(int? emailtemplateId);
+        Task<Response<List<EmailTemplate>>> GetEmailTemplates();
+        Task<Response<EmailTemplate>> GetEmailTemplateById(int? emailtemplateId);
       
-        Task<int> AddEmailTemplate(EmailTemplate emailtemplate);
-        Task<int> DeleteEmailTemplate(int? emailtemplateID);
-        Task UpdateEmailTemplate(EmailTemplate emailtemplate);
+        Task<Response<int>> AddEmailTemplate(EmailTemplate emailtemplate);
+        Task<Response<int>> DeleteEmailTemplate(int? emailtemplateID);
+        Task<Response<bool>> UpdateEmailTemplate(EmailTemplate emailtemplate);
     }
 }

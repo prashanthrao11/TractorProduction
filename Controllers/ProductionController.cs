@@ -22,7 +22,7 @@ namespace TractorProduction.Web.Controllers
 
         #region GET: api/Production
         [HttpGet("Production")]
-        public async Task<ActionResult<IEnumerable<Production>>> Get()
+        public async Task<ActionResult> Get()
         {
             try
             {
@@ -42,7 +42,7 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region GET: api/Production/2
         [HttpGet("Production/{id}")]
-        public async Task<ActionResult<IEnumerable<Production>>> GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region PUT: api/ProjectMilestone
         [HttpPut]
-        public async Task<ActionResult<Production>> UpdateProjectMilestone([FromBody]Production model)
+        public async Task<ActionResult> UpdateProjectMilestone([FromBody]Production model)
         {
             if (ModelState.IsValid)
             {
@@ -85,34 +85,18 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region POST: api/ProjectMilestone
         [HttpPost("Production")]
-        public async Task<ActionResult<Production>> AddProjectMilestone(Production model)
+        public async Task<ActionResult> AddProjectMilestone(Production model)
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var milestoneId = await _repository.AddProduction(model);
-
-                    if (milestoneId > 0)
-                    {
-                        return Ok(milestoneId);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new JsonException(ex.Message, ex);
-                }
+                return Ok(await _repository.AddProduction(model));
             }
             return BadRequest();
         }
         #endregion
         #region POST: api/ProjectMilestone
         [HttpPost("ProductionSearch")]
-        public async Task<ActionResult<List<Production>>> Search(Production model)
+        public async Task<ActionResult> Search(Production model)
         {
             if (ModelState.IsValid)
             {
@@ -139,28 +123,9 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region DELETE: api/ProjectMilestone/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Production>> Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
-            int result = 0;
-
-            if (id == null)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                result = await _repository.DeleteProduction(id);
-                if (result == 0)
-                {
-                    return NotFound();
-                }
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                throw new JsonException(ex.Message, ex);
-            }
+            return Ok(await _repository.DeleteProduction(id));
         }
         #endregion
     }

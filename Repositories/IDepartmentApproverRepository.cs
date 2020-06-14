@@ -6,10 +6,10 @@ using TractorProduction.Web.Models;
 
 namespace TractorProduction.Web.Repositories
 {
-    public interface IDepartmentApproverRepository
+    public interface IDepartmentApproverRepository : IDisposable
     {
-        Task<List<DepartmentApprover>> GetDepartmentApprovers(int workflowId);
-        Task<int> UpdateDepartmentApprovers(DepartmentApproversVM model);
+        Task<Response<List<DepartmentApprover>>> GetDepartmentApprovers(int workflowId);
+        Task<Response<int>> UpdateDepartmentApprovers(DepartmentApproversVM model);
     }
 }
 

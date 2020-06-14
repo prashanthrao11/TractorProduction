@@ -6,13 +6,13 @@ using TractorProduction.Web.Models;
 
 namespace TractorProduction.Web.Repositories
 {
-   public interface IRoleRepository
+   public interface IRoleRepository : IDisposable
     {
-        Task<List<Role>> GetRoles();
-        Task<Role> GetRoleById(int? roleId);
+        Task<Response<List<Role>>> GetRoles();
+        Task<Response<Role>> GetRoleById(int? roleId);
         
-        Task<int> AddRole(Role role);
-        Task<int> DeleteRole(int? roleId);
-        Task UpdateRole(Role role);
+        Task<Response<int>> AddRole(Role role);
+        Task<Response<int>> DeleteRole(int? roleId);
+        Task<Response<bool>> UpdateRole(Role role);
     }
 }

@@ -9,16 +9,16 @@ using TractorProduction.Web.Repositories;
 
 namespace TractorProduction.Web.Services
 {
-    public class WorkflowPhaseMilestoneService : IWorkflowPhaseMilestoneRepository
+    public class WorkflowPhaseMilestoneService : BaseService, IWorkflowPhaseMilestoneRepository
     {
-        private readonly APIContext _context;
-        public WorkflowPhaseMilestoneService(APIContext context)
+       
+        public WorkflowPhaseMilestoneService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public async Task<int> AddWorkflowPhaseMilestone(MilestoneManageVM workflowphasemilestone)
+        public async Task<Response<int>> AddWorkflowPhaseMilestone(MilestoneManageVM workflowphasemilestone)
         {
-            if (_context != null)
+            try
             {
                 if (workflowphasemilestone.Milestone_ID != 0)
                 {
@@ -30,7 +30,7 @@ namespace TractorProduction.Web.Services
                     item.Workflow_ID = workflowphasemilestone.Workflow_ID;
                     item.Is_Active = workflowphasemilestone.Is_Active;
                     var existingList = _context.MilestoneDepartment.Where(x => x.Milestone_ID == workflowphasemilestone.Milestone_ID).ToList();
-                    foreach(var eItem in existingList)
+                    foreach (var eItem in existingList)
                     {
                         if (workflowphasemilestone.DepartmentIds.IndexOf(eItem.Department_ID.ToString()) == 0)
                         {
@@ -42,7 +42,7 @@ namespace TractorProduction.Web.Services
                     {
                         int deptId = Convert.ToInt32(deptIdStr);
                         var deptItem = _context.MilestoneDepartment.Where(x => x.Department_ID == deptId && x.Milestone_ID == item.Milestone_ID).FirstOrDefault();
-                       
+
                         if (deptItem == null)
                         {
                             MilestoneDepartment department = new MilestoneDepartment();
@@ -83,37 +83,75 @@ namespace TractorProduction.Web.Services
                     await _context.SaveChangesAsync();
                 }
                 await _context.SaveChangesAsync();
-                return workflowphasemilestone.Milestone_ID;
+                return new Response<int>()
+                {
+                    IsSuccess = true,
+                    Model = workflowphasemilestone.Milestone_ID
+                };
             }
-            return 0;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<int>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task<int> DeleteWorkflowPhaseMilestone(int? workflowphasemilestoneID)
+        public Task<Response<int>> DeleteWorkflowPhaseMilestone(int? workflowphasemilestoneID)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<MilestoneManageVM> GetWorkflowPhaseMilestoneById(int? workflowphasemilestoneID)
+        public async Task<Response<MilestoneManageVM>> GetWorkflowPhaseMilestoneById(int? workflowphasemilestoneID)
         {
-            if (_context != null)
+            try
             {
-                return await _context.ManageMilestone.FromSqlRaw("USP_Get_MilestoneDeptDetails {0}",workflowphasemilestoneID).FirstOrDefaultAsync();
+                var model= await _context.ManageMilestone.FromSqlRaw("USP_Get_MilestoneDeptDetails {0}", workflowphasemilestoneID).FirstOrDefaultAsync();
+                return new Response<MilestoneManageVM>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<MilestoneManageVM>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task UpdateWorkflowPhaseMilestone(MilestoneManageVM workflowphasemilestone)
+        public Task<Response<bool>> UpdateWorkflowPhaseMilestone(MilestoneManageVM workflowphasemilestone)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<List<MilestoneManageVM>> GetWorkflowPhaseMilestones()
+        public async Task<Response<List<MilestoneManageVM>>> GetWorkflowPhaseMilestones()
         {
-            if (_context != null)
+            try
             {
-                return await _context.ManageMilestone.FromSqlRaw("USP_Get_MilestoneDeptDetails").ToListAsync();
+                var model= await _context.ManageMilestone.FromSqlRaw("USP_Get_MilestoneDeptDetails").ToListAsync();
+                return new Response<List<MilestoneManageVM>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<MilestoneManageVM>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
     }
 }

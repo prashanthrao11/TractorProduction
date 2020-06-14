@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using TractorProduction.Web.Models;
 namespace TractorProduction.Web.Repositories
 {
-    public interface IProductionMilestoneDepartmentApprovalRepository
+    public interface IProductionMilestoneDepartmentApprovalRepository : IDisposable
     {
-        Task<List<ProductionMilestoneDepartmentApproval>> GetProductionMilestoneDepartmentApprovals();
-        Task<ProductionMilestoneDepartmentApproval> GetProductionMilestoneDepartmentApprovalById(int? productionmilestonedepartmentapprovalID);
+        Task<Response<List<ProductionMilestoneDepartmentApproval>>> GetProductionMilestoneDepartmentApprovals();
+        Task<Response<ProductionMilestoneDepartmentApproval>> GetProductionMilestoneDepartmentApprovalById(int? productionmilestonedepartmentapprovalID);
        
-        Task<int> AddProductionMilestoneDepartmentApproval(ProductionMilestoneDepartmentApproval productionmilestonedepartmentapproval);
-        Task<int> DeleteProductionMilestoneDepartmentApproval(int? productionmilestonedepartmentapprovalID);
-        Task UpdateProductionMilestoneDepartmentApproval(ProductionMilestoneDepartmentApproval productionmilestonedepartmentapproval);
+        Task<Response<int>> AddProductionMilestoneDepartmentApproval(ProductionMilestoneDepartmentApproval productionmilestonedepartmentapproval);
+        Task<Response<int>> DeleteProductionMilestoneDepartmentApproval(int? productionmilestonedepartmentapprovalID);
+        Task<Response<bool>> UpdateProductionMilestoneDepartmentApproval(ProductionMilestoneDepartmentApproval productionmilestonedepartmentapproval);
     }
 }

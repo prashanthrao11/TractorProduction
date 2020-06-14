@@ -8,48 +8,88 @@ using TractorProduction.Web.Models;
 using TractorProduction.Web.Repositories;
 namespace TractorProduction.Web.Services
 {
-    public class MilestonestoneDepartmentService : IMilestoneDepartmentrepository
+    public class MilestonestoneDepartmentService : BaseService, IMilestoneDepartmentrepository
     {
-        private readonly APIContext _context;
-        public MilestonestoneDepartmentService(APIContext context)
+     
+        public MilestonestoneDepartmentService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public async Task<int> AddMilestoneDepartment(MilestoneDepartment milestonedepartment)
+        public async Task<Response<int>> AddMilestoneDepartment(MilestoneDepartment milestonedepartment)
         {
-            if (_context != null)
+            try
             {
                 await _context.MilestoneDepartment.AddAsync(milestonedepartment);
                 await _context.SaveChangesAsync();
-                return milestonedepartment.Milestone_Department_ID;
+                var model =  milestonedepartment.Milestone_Department_ID;
+
+                return new Response<int>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return 0;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<int>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task<int> DeleteMilestoneDepartment(int? milestonedepartmentID)
+        public Task<Response<int>> DeleteMilestoneDepartment(int? milestonedepartmentID)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<MilestoneDepartment> GetMilestoneDepartmentById(int? milestonedepartmentID)
+        public async Task<Response<MilestoneDepartment>> GetMilestoneDepartmentById(int? milestonedepartmentID)
         {
-            if (_context != null)
+            try
             {
-                return await _context.MilestoneDepartment.Where(x => x.Milestone_Department_ID == milestonedepartmentID).FirstOrDefaultAsync();
+                var model = await _context.MilestoneDepartment.Where(x => x.Milestone_Department_ID == milestonedepartmentID).FirstOrDefaultAsync();
+                return new Response<MilestoneDepartment>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<MilestoneDepartment>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public async Task<List<MilestoneDepartment>> GetMilestoneDepartments()
+        public async Task<Response<List<MilestoneDepartment>>> GetMilestoneDepartments()
         {
-            if (_context != null)
+            try
             {
-                return await _context.MilestoneDepartment.ToListAsync();
+                var model = await _context.MilestoneDepartment.ToListAsync();
+                return new Response<List<MilestoneDepartment>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<MilestoneDepartment>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task UpdateMilestoneDepartment(MilestoneDepartment milestonedepartment)
+        public Task<Response<bool>> UpdateMilestoneDepartment(MilestoneDepartment milestonedepartment)
         {
             throw new NotImplementedException();
         }

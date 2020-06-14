@@ -9,42 +9,85 @@ using TractorProduction.Web.Repositories;
 
 namespace TractorProduction.Web.Services
 {
-    public class AttachmentService : IAttachmentRepository
-    {
-        private readonly APIContext _context;
-        public AttachmentService(APIContext context)
+    public class AttachmentService : BaseService,IAttachmentRepository
+    {  
+        public AttachmentService(APIContext context,ILogDetailsRepository log,IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+           
         }
-        public async Task<List<AttachmentHeader>> DeleteDoc(AttachmentHeader model)
+      
+        public async Task<Response<List<AttachmentHeader>>> DeleteDoc(AttachmentHeader model)
         {
-            model.Is_Active = false;
-            _context.Update(model);
-            await _context.SaveChangesAsync();
-            return await _context.AttachmentHeader.Where(x => x.Attachment_Ref_ID == model.Attachment_Ref_ID && x.Is_Active == true).ToListAsync();
-        }
-
-        public async Task<List<AttachmentHeader>> GetAttachmentDocs(int productionId)
-        {
-            if (_context != null)
+            try
             {
-                return await _context.AttachmentHeader.Where(x => x.Attachment_Ref_ID == productionId).ToListAsync();
+                model.Is_Active = false;
+                _context.Update(model);
+                await _context.SaveChangesAsync();
+                var items = await _context.AttachmentHeader.Where(x => x.Attachment_Ref_ID == model.Attachment_Ref_ID && x.Is_Active == true).ToListAsync();
+                return new Response<List<AttachmentHeader>>()
+                {
+                    IsSuccess = true,
+                    Model = items
+                };
             }
-            return null;
-        }
-
-        public async Task<List<AttachmentHeader>> GetProductionMilestoneAttachments(int prodMilestoneId)
-        {
-            if (_context != null)
+            catch(Exception ex)
             {
-                return await _context.AttachmentHeader.Where(x => x.Attachment_Ref_ID == prodMilestoneId && x.Is_Active==true).ToListAsync();
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<AttachmentHeader>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
             }
-            return null;
         }
 
-        public async Task<AttachmentDoc> UploadDoc(AttachmentDoc model)
+        public async Task<Response<List<AttachmentHeader>>> GetAttachmentDocs(int productionId)
         {
-            if (_context != null)
+            try
+            {
+                var model = await _context.AttachmentHeader.Where(x => x.Attachment_Ref_ID == productionId).ToListAsync();
+                return new Response<List<AttachmentHeader>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
+            }
+            catch(Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<AttachmentHeader>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<Response<List<AttachmentHeader>>> GetProductionMilestoneAttachments(int prodMilestoneId)
+        {
+            try
+            {
+                var model = await _context.AttachmentHeader.Where(x => x.Attachment_Ref_ID == prodMilestoneId && x.Is_Active == true).ToListAsync();
+                return new Response<List<AttachmentHeader>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<AttachmentHeader>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<Response<AttachmentDoc>> UploadDoc(AttachmentDoc model)
+        {
+            try
             {
                 AttachmentHeader header = new AttachmentHeader();
                 header = model.AttachmentHeaderItem;
@@ -60,8 +103,21 @@ namespace TractorProduction.Web.Services
                 _context.AttachmentDetails.Add(details);
                 await _context.SaveChangesAsync();
 
+                return new Response<AttachmentDoc>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return model;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<AttachmentDoc>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
     }
 }

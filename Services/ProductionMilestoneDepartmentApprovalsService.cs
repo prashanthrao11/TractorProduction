@@ -8,48 +8,89 @@ using TractorProduction.Web.Models;
 using TractorProduction.Web.Repositories;
 namespace TractorProduction.Web.Services
 {
-    public class ProductionMilestoneDepartmentApprovalsService : IProductionMilestoneDepartmentApprovalRepository
+    public class ProductionMilestoneDepartmentApprovalsService : BaseService, IProductionMilestoneDepartmentApprovalRepository
     {
-        private readonly APIContext _context;
-        public ProductionMilestoneDepartmentApprovalsService(APIContext context)
+      
+
+        public ProductionMilestoneDepartmentApprovalsService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public async Task<int> AddProductionMilestoneDepartmentApproval(ProductionMilestoneDepartmentApproval productionmilestonedepartmentapproval)
+        public async Task<Response<int>> AddProductionMilestoneDepartmentApproval(ProductionMilestoneDepartmentApproval productionmilestonedepartmentapproval)
         {
-            if (_context != null)
+            try
             {
                 await _context.ProductionMilestoneDepartmentApproval.AddAsync(productionmilestonedepartmentapproval);
                 await _context.SaveChangesAsync();
-                return productionmilestonedepartmentapproval.P_D_ID;
+                var model= productionmilestonedepartmentapproval.P_D_ID;
+
+                return new Response<int>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return 0;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<int>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task<int> DeleteProductionMilestoneDepartmentApproval(int? productionmilestonedepartmentapprovalID)
+        public Task<Response<int>> DeleteProductionMilestoneDepartmentApproval(int? productionmilestonedepartmentapprovalID)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ProductionMilestoneDepartmentApproval> GetProductionMilestoneDepartmentApprovalById(int? productionmilestonedepartmentapprovalID)
+        public async Task<Response<ProductionMilestoneDepartmentApproval>> GetProductionMilestoneDepartmentApprovalById(int? productionmilestonedepartmentapprovalID)
         {
-            if (_context != null)
+            try
             {
-                return await _context.ProductionMilestoneDepartmentApproval.Where(x => x.P_D_ID == productionmilestonedepartmentapprovalID).FirstOrDefaultAsync();
+                var model = await _context.ProductionMilestoneDepartmentApproval.Where(x => x.P_D_ID == productionmilestonedepartmentapprovalID).FirstOrDefaultAsync();
+                return new Response<ProductionMilestoneDepartmentApproval>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<ProductionMilestoneDepartmentApproval>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public async Task<List<ProductionMilestoneDepartmentApproval>> GetProductionMilestoneDepartmentApprovals()
+        public async Task<Response<List<ProductionMilestoneDepartmentApproval>>> GetProductionMilestoneDepartmentApprovals()
         {
-            if (_context != null)
+            try
             {
-                return await _context.ProductionMilestoneDepartmentApproval.ToListAsync();
+                var model = await _context.ProductionMilestoneDepartmentApproval.ToListAsync();
+                return new Response<List<ProductionMilestoneDepartmentApproval>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<ProductionMilestoneDepartmentApproval>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task UpdateProductionMilestoneDepartmentApproval(ProductionMilestoneDepartmentApproval productionmilestonedepartmentapproval)
+        public Task<Response<bool>> UpdateProductionMilestoneDepartmentApproval(ProductionMilestoneDepartmentApproval productionmilestonedepartmentapproval)
         {
             throw new NotImplementedException();
         }

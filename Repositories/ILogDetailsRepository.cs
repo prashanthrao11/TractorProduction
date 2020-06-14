@@ -7,11 +7,9 @@ namespace TractorProduction.Web.Repositories
 {
     public interface ILogDetailsRepository
     {
-        Task<List<LogDetails>> GetLogDetails();
-        Task<LogDetails> GetLogDetailsById(int? logdetailsId);
-       
-        Task<int> AddLogDetails(LogDetails logdetails);
-        Task<int> DeleteLogDetails(int? logdetailsId);
-        Task UpdateLogDetails(LogDetails logdetails);
+        void Info(string message, string logger = "");
+        void Warning(string message, string logger = "");
+
+        void Error(Exception ex, string logger = "");
     }
 }

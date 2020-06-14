@@ -6,12 +6,12 @@ using TractorProduction.Web.Models;
 
 namespace TractorProduction.Web.Repositories
 {
-    public interface IProductionFinalApprovalRepository
+    public interface IProductionFinalApprovalRepository : IDisposable
     {
-        Task<List<ProductionFinalApproval>> GetProductionFinalApprovals();
-        Task<ProductionFinalApproval> GetProductionFinalApprovalById(int? productionfinalapprovalID);
-        Task<int> AddProductionFinalApproval(ProductionFinalApproval productionfinalapproval);
-        Task<int> DeleteProductionFinalApproval(int? productionfinalapprovalID);
-        Task UpdateProductionFinalApproval(ProductionFinalApproval productionFinalapproval);
+        Task<Response<List<ProductionFinalApproval>>> GetProductionFinalApprovals();
+        Task<Response<ProductionFinalApproval>> GetProductionFinalApprovalById(int? productionfinalapprovalID);
+        Task<Response<int>> AddProductionFinalApproval(ProductionFinalApproval productionfinalapproval);
+        Task<Response<int>> DeleteProductionFinalApproval(int? productionfinalapprovalID);
+        Task<Response<bool>> UpdateProductionFinalApproval(ProductionFinalApproval productionFinalapproval);
     }
 }

@@ -12,6 +12,28 @@ namespace TractorProduction.Web.Services
     public class UserService : IUserRepository
     {
         private readonly APIContext _context;
+        private readonly ILogDetailsRepository _log;
+        private readonly IUserRepository _user;
+        #region Dispose Object
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
         public UserService(APIContext context)
         {
             _context = context;
@@ -123,6 +145,7 @@ namespace TractorProduction.Web.Services
 
         public async Task<UserVM> GetUserById(int? userId)
         {
+            
             if (_context != null)
             {
                 return await _context.UserDetails.Where(x => x.User_ID == userId).FirstOrDefaultAsync();
@@ -132,6 +155,7 @@ namespace TractorProduction.Web.Services
 
         public async Task<List<UserVM>> GetUsers()
         {
+            
             if (_context != null)
             {
                 return await _context.UserDetails.ToListAsync();
@@ -140,6 +164,7 @@ namespace TractorProduction.Web.Services
         }
         public async Task<UserVM> CurrentUser()
         {
+           
             var userName = "prashanth.s@gmail.com";
             var user = await _context.User.Where(x => x.Email == userName).FirstAsync();
             var userRole = await _context.UserRole.Where(x => x.User_ID == user.User_ID).FirstAsync();
@@ -155,6 +180,7 @@ namespace TractorProduction.Web.Services
         }
         public User GetCurrentUser()
         {
+            
             var userName = "prashanth.s@gmail.com";
             var user = _context.User.Where(x=>x.Email==userName).First();
             var userRole = _context.UserRole.Where(x => x.User_ID == user.User_ID).First();

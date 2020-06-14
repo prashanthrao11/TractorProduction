@@ -21,7 +21,7 @@ namespace TractorProduction.Web.Controllers
         }
 
         [HttpGet("MilestoneAttachments/{id}")]
-        public async Task<ActionResult<List<AttachmentHeader>>> GetProductionMilestoneAttachments(int id)
+        public async Task<ActionResult> GetProductionMilestoneAttachments(int id)
         {
             if (ModelState.IsValid)
             {
@@ -38,7 +38,7 @@ namespace TractorProduction.Web.Controllers
             return BadRequest();
         }
         [HttpPost("MilestoneAttachment")]
-        public async Task<ActionResult<int>> Delete([FromBody]AttachmentHeader model)
+        public async Task<ActionResult> Delete([FromBody]AttachmentHeader model)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace TractorProduction.Web.Controllers
 
         #region POST: api/FileUpload/Upload
         [HttpPost("Upload")]
-        public async Task<ActionResult<AttachmentDoc>> FileUploadSave([FromBody]AttachmentDoc model)
+        public async Task<ActionResult> FileUploadSave([FromBody]AttachmentDoc model)
         {
             if (ModelState.IsValid)
             {

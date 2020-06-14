@@ -8,48 +8,87 @@ using TractorProduction.Web.Models;
 using TractorProduction.Web.Repositories;
 namespace TractorProduction.Web.Services
 {
-    public class StatusService : IStatusRepository
+    public class StatusService : BaseService, IStatusRepository
     {
-        private readonly APIContext _context;
-        public StatusService(APIContext context)
+       
+
+        public StatusService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public async Task<int> AddStatus(Status status)
+        public async Task<Response<int>> AddStatus(Status status)
         {
-            if (_context != null)
+            try
             {
                 await _context.Status.AddAsync(status);
                 await _context.SaveChangesAsync();
-                return status.Status_ID;
+                return new Response<int>()
+                {
+                    IsSuccess = true,
+                    Model = status.Status_ID
+                };
             }
-            return 0;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<int>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task<int> DeleteStatus(int? statusID)
+        public Task<Response<int>> DeleteStatus(int? statusID)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Status> GetStatusById(int? statusID)
+        public async Task<Response<Status>> GetStatusById(int? statusID)
         {
-            if (_context != null)
-            {
-                return await _context.Status.Where(x => x.Status_ID == statusID).FirstOrDefaultAsync();
+            try
+            { 
+                var model = await _context.Status.Where(x => x.Status_ID == statusID).FirstOrDefaultAsync();
+                return new Response<Status>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<Status>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public async Task<List<Status>> GetStatuss()
+        public async Task<Response<List<Status>>> GetStatuss()
         {
-            if (_context != null)
+            try
             {
-                return await _context.Status.ToListAsync();
+                var model = await _context.Status.ToListAsync();
+                return new Response<List<Status>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<Status>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task UpdateStatus(Status status)
+        public Task<Response<bool>> UpdateStatus(Status status)
         {
             throw new NotImplementedException();
         }

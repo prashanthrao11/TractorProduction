@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using TractorProduction.Web.Models;
 namespace TractorProduction.Web.Repositories
 {
-    public interface IProductionRepository
+    public interface IProductionRepository : IDisposable
     {
-        Task<List<Production>> GetProductions();
-        Task<Production> GetProductionById(int? productionID);
-        Task<int> AddProduction(Production production);
-        Task<List<Production>> SearchProduction(Production production);
-        Task<int> DeleteProduction(int? productionID);
-        Task UpdateProduction(Production production);
+        Task<Response<List<Production>>> GetProductions();
+        Task<Response<Production>> GetProductionById(int? productionID);
+        Task<Response<int>> AddProduction(Production production);
+        Task<Response<List<Production>>> SearchProduction(Production production);
+        Task<Response<int>> DeleteProduction(int? productionID);
+        Task<Response<bool>> UpdateProduction(Production production);
     }
 }

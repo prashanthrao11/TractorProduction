@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\AdminComponents\" />
-    <Folder Include="ClientApp\src\app\Intercepters\" />
+    <Folder Include="ClientApp\src\app\Interceptors\" />
     <Folder Include="ClientApp\src\app\Models\" />
     <Folder Include="ClientApp\src\app\Pipes\" />
     <Folder Include="ClientApp\src\app\Services\" />

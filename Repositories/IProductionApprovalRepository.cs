@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using TractorProduction.Web.Models;
 namespace TractorProduction.Web.Repositories
 {
-    public interface IProductionApprovalRepository
+    public interface IProductionApprovalRepository : IDisposable
     {
-        Task<List<ProductionApproval>> GetProductionUserApprovals(int productionId);
-        Task<List<ProductionApproval>> GetProductionApprovals(int productionId);
-        Task<int> UpdateProductionApprovals(ProductionApprovalVM model);
+        Task<Response<List<ProductionApproval>>> GetProductionUserApprovals(int productionId);
+        Task<Response<List<ProductionApproval>>> GetProductionApprovals(int productionId);
+        Task<Response<int>> UpdateProductionApprovals(ProductionApprovalVM model);
     }
 }

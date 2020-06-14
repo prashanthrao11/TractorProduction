@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using TractorProduction.Web.Models;
 namespace TractorProduction.Web.Repositories
 {
-    public interface IUserRoleRepository
+    public interface IUserRoleRepository : IDisposable
     {
-        Task<List<UserRole>> GetUserRoles();
-        Task<UserRole> GetUserRoleById(int? userroleID);
-        Task<int> AddUserRole(UserRole userrole);
-        Task<int> DeleteUserRole(int? userroleID);
-        Task UpdateUserRole(UserRole userrole);
+        Task<Response<List<UserRole>>> GetUserRoles();
+        Task<Response<UserRole>> GetUserRoleById(int? userroleID);
+        Task<Response<int>> AddUserRole(UserRole userrole);
+        Task<Response<int>> DeleteUserRole(int? userroleID);
+        Task<Response<bool>> UpdateUserRole(UserRole userrole);
     }
 }

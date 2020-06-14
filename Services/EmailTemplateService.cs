@@ -8,48 +8,87 @@ using TractorProduction.Web.Models;
 using TractorProduction.Web.Repositories;
 namespace TractorProduction.Web.Services
 {
-    public class EmailTemplateService : IEmailTemplateRepository
+    public class EmailTemplateService : BaseService, IEmailTemplateRepository
     {
-        private readonly APIContext _context;
-        public EmailTemplateService(APIContext context)
+     
+        public EmailTemplateService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public async Task<int> AddEmailTemplate(EmailTemplate emailtemplate)
+        public async Task<Response<int>> AddEmailTemplate(EmailTemplate emailtemplate)
         {
-            if (_context != null)
+            try
             {
                 await _context.EmailTemplate.AddAsync(emailtemplate);
                 await _context.SaveChangesAsync();
-                return emailtemplate.Email_Template_ID;
+                var model = emailtemplate.Email_Template_ID;
+                return new Response<int>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return 0;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<int>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task<int> DeleteEmailTemplate(int? emailtemplateID)
+        public Task<Response<int>> DeleteEmailTemplate(int? emailtemplateID)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<EmailTemplate> GetEmailTemplateById(int? emailtemplateId)
+        public async Task<Response<EmailTemplate>> GetEmailTemplateById(int? emailtemplateId)
         {
-            if (_context != null)
+            try
             {
-                return await _context.EmailTemplate.Where(x => x.Email_Template_ID == emailtemplateId).FirstOrDefaultAsync();
+                var model = await _context.EmailTemplate.Where(x => x.Email_Template_ID == emailtemplateId).FirstOrDefaultAsync();
+                return new Response<EmailTemplate>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<EmailTemplate>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public async Task<List<EmailTemplate>> GetEmailTemplates()
+        public async Task<Response<List<EmailTemplate>>> GetEmailTemplates()
         {
-            if (_context != null)
+            try
             {
-                return await _context.EmailTemplate.ToListAsync();
+                var model = await _context.EmailTemplate.ToListAsync();
+                return new Response<List<EmailTemplate>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<EmailTemplate>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task UpdateEmailTemplate(EmailTemplate emailtemplate)
+        public Task<Response<bool>> UpdateEmailTemplate(EmailTemplate emailtemplate)
         {
             throw new NotImplementedException();
         }

@@ -15,5 +15,8 @@ namespace TractorProduction.Web.Models
         public string Log_Type { get; set; }
         public string Log_Area { get; set; }
         public string Log_Message { get; set; }
+        public string Expection { get; set; }
+        public string Created_By { get; set; }
+        public DateTime? Created_Date { get; set; }
     }
 }

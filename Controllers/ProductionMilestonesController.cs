@@ -22,7 +22,7 @@ namespace TractorProduction.Web.Controllers
 
         #region GET: api/ProductionMilestone/2
         [HttpGet("ProductionMilestones/{id}")]
-        public async Task<ActionResult<IEnumerable<ProductionMilestone>>> GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region POST: api/ProjectMilestone
         [HttpPost("ProductionMilestones")]
-        public async Task<ActionResult<ProductionMilestone>> UpdateProjectMilestone([FromBody]ProductionMilestonesVM model)
+        public async Task<ActionResult> UpdateProjectMilestone([FromBody]ProductionMilestonesVM model)
         {
             if (ModelState.IsValid)
             {

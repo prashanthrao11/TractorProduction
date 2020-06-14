@@ -8,16 +8,17 @@ using TractorProduction.Web.Models;
 using TractorProduction.Web.Repositories;
 namespace TractorProduction.Web.Services
 {
-    public class ProductPhasesService : IProductPhaseRepository
+    public class ProductPhasesService : BaseService, IProductPhaseRepository
     {
-        private readonly APIContext _context;
-        public ProductPhasesService(APIContext context)
+       
+
+        public ProductPhasesService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public async Task<int> AddProductPhase(ProductPhase productphase)
+        public async Task<Response<int>> AddProductPhase(ProductPhase productphase)
         {
-            if (_context != null)
+            try
             {
                 productphase.Phase_Key = productphase.Phase_Name.Replace(" ", "_");
                 if (productphase.Product_Phase_ID != 0)
@@ -32,35 +33,73 @@ namespace TractorProduction.Web.Services
                     await _context.ProductPhase.AddAsync(productphase);
                 }
                 await _context.SaveChangesAsync();
-                return productphase.Product_Phase_ID;
+                return new Response<int>()
+                {
+                    IsSuccess = true,
+                    Model = productphase.Product_Phase_ID
+                };
             }
-            return 0;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<int>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task<int> DeleteProductPhase(int? productphaseID)
+        public Task<Response<int>> DeleteProductPhase(int? productphaseID)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ProductPhase> GetProductPhaseById(int? productphaseId)
+        public async Task<Response<ProductPhase>> GetProductPhaseById(int? productphaseId)
         {
-            if (_context != null)
+            try
             {
-                return await _context.ProductPhase.Where(x => x.Product_Phase_ID == productphaseId).FirstOrDefaultAsync();
+                var model = await _context.ProductPhase.Where(x => x.Product_Phase_ID == productphaseId).FirstOrDefaultAsync();
+                return new Response<ProductPhase>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<ProductPhase>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public async Task<List<ProductPhase>> GetProductPhases()
+        public async Task<Response<List<ProductPhase>>> GetProductPhases()
         {
-            if (_context != null)
+            try
             {
-                return await _context.ProductPhase.ToListAsync();
+                var model = await _context.ProductPhase.ToListAsync();
+                return new Response<List<ProductPhase>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<ProductPhase>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task UpdateProductPhase(ProductPhase productphase)
+        public Task<Response<bool>> UpdateProductPhase(ProductPhase productphase)
         {
             throw new NotImplementedException();
         }

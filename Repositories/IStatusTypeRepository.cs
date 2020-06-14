@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using TractorProduction.Web.Models;
 namespace TractorProduction.Web.Repositories
 {
-   public interface IStatusTypeRepository
+   public interface IStatusTypeRepository : IDisposable
     {
-        Task<List<StatusType>> GetStatusTypes();
-        Task<StatusType> GetStatusTypeById(int? statustypeId);
+        Task<Response<List<StatusType>>> GetStatusTypes();
+        Task<Response<StatusType>> GetStatusTypeById(int? statustypeId);
        
-        Task<int> AddStatusType(StatusType statustype);
-        Task<int> DeleteStatusType(int? statustypeId);
-        Task UpdateStatusType(StatusType statustype);
+        Task<Response<int>> AddStatusType(StatusType statustype);
+        Task<Response<int>> DeleteStatusType(int? statustypeId);
+        Task<Response<bool>> UpdateStatusType(StatusType statustype);
     }
 }

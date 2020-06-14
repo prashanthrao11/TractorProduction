@@ -9,42 +9,69 @@ using TractorProduction.Web.Repositories;
 
 namespace TractorProduction.Web.Services
 {
-    public class UserRoleService : IUserRoleRepository
+    public class UserRoleService : BaseService, IUserRoleRepository
     {
-        private readonly APIContext _context;
-        public UserRoleService(APIContext context)
+      
+
+        public UserRoleService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public Task<int> AddUserRole(UserRole userrole)
+        public Task<Response<int>> AddUserRole(UserRole userrole)
         {
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteUserRole(int? userroleID)
+        public Task<Response<int>> DeleteUserRole(int? userroleID)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<UserRole> GetUserRoleById(int? userroleID)
+        public async Task<Response<UserRole>> GetUserRoleById(int? userroleID)
         {
-            if (_context != null)
+            try
             {
-                return await _context.UserRole.Where(x => x.User_Role_ID == userroleID).FirstOrDefaultAsync();
+                var model= await _context.UserRole.Where(x => x.User_Role_ID == userroleID).FirstOrDefaultAsync();
+                return new Response<UserRole>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<UserRole>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public async Task<List<UserRole>> GetUserRoles()
+        public async Task<Response<List<UserRole>>> GetUserRoles()
         {
-            if (_context != null)
+            try
             {
-                return await _context.UserRole.ToListAsync();
+                var model = await _context.UserRole.ToListAsync();
+                return new Response<List<UserRole>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<UserRole>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task UpdateUserRole(UserRole userrole)
+        public Task<Response<bool>> UpdateUserRole(UserRole userrole)
         {
             throw new NotImplementedException();
         }

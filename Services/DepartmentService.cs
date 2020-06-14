@@ -9,42 +9,68 @@ using TractorProduction.Web.Repositories;
 
 namespace TractorProduction.Web.Services
 {
-    public class DepartmentService : IDepartmentRepository
+    public class DepartmentService : BaseService, IDepartmentRepository
     {
-        private readonly APIContext _context;
-        public DepartmentService(APIContext context)
+     
+        public DepartmentService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public Task<int> AddDepartment(Department department)
+        public Task<Response<int>> AddDepartment(Department department)
         {
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteDepartment(int? departmentId)
+        public Task<Response<int>> DeleteDepartment(int? departmentId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Department> GetDepartmentById(int? departmentId)
+        public async Task<Response<Department>> GetDepartmentById(int? departmentId)
         {
-            if (_context != null)
+            try
             {
-                return await _context.Department.Where(x => x.Department_ID == departmentId).FirstOrDefaultAsync();
+                var model = await _context.Department.Where(x => x.Department_ID == departmentId).FirstOrDefaultAsync();
+                return new Response<Department>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<Department>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public async Task<List<Department>> GetDepartments()
+        public async Task<Response<List<Department>>> GetDepartments()
         {
-            if (_context != null)
+            try
             {
-                return await _context.Department.ToListAsync();
+                var model = await _context.Department.ToListAsync();
+                return new Response<List<Department>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<Department>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task UpdateDepartment(Department department)
+        public Task<Response<bool>> UpdateDepartment(Department department)
         {
             throw new NotImplementedException();
         }

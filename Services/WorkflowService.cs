@@ -9,19 +9,19 @@ using TractorProduction.Web.Repositories;
 
 namespace TractorProduction.Web.Services
 {
-    public class WorkflowService : IWorkflowRepository
+    public class WorkflowService : BaseService, IWorkflowRepository
     {
-        private readonly APIContext _context;
-        public WorkflowService(APIContext context)
+        public WorkflowService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public async Task<int> AddWorkflow(Workflow workflow)
+        public async Task<Response<int>> AddWorkflow(Workflow workflow)
         {
-            if (_context != null)
+            try
             {
                 workflow.Workflow_Key = workflow.Workflow_Name.Replace(" ", "_");
-                if (workflow.Workflow_ID!=0){
+                if (workflow.Workflow_ID != 0)
+                {
                     var item = _context.Workflow.Find(workflow.Workflow_ID);
                     item.Workflow_Name = workflow.Workflow_Name;
                     item.Is_Active = workflow.Is_Active;
@@ -32,35 +32,73 @@ namespace TractorProduction.Web.Services
                     await _context.Workflow.AddAsync(workflow);
                 }
                 await _context.SaveChangesAsync();
-                return workflow.Workflow_ID;
+                return new Response<int>()
+                {
+                    IsSuccess = true,
+                    Model = workflow.Workflow_ID
+                };
             }
-            return 0;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<int>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task<int> DeleteWorkflow(int? workflowId)
+        public Task<Response<int>> DeleteWorkflow(int? workflowId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Workflow> GetWorkflowById(int? workflowId)
+        public async Task<Response<Workflow>> GetWorkflowById(int? workflowId)
         {
-            if (_context != null)
+            try
             {
-                return await _context.Workflow.Where(x => x.Workflow_ID == workflowId).FirstOrDefaultAsync();
+                var model= await _context.Workflow.Where(x => x.Workflow_ID == workflowId).FirstOrDefaultAsync();
+                return new Response<Workflow>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<Workflow>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public async Task<List<Workflow>> GetWorkflows()
+        public async Task<Response<List<Workflow>>> GetWorkflows()
         {
-            if (_context != null)
+            try
             {
-                return await _context.Workflow.ToListAsync();
+                var model= await _context.Workflow.ToListAsync();
+                return new Response<List<Workflow>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<Workflow>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task UpdateWorkflow(Workflow workflow)
+        public Task<Response<bool>> UpdateWorkflow(Workflow workflow)
         {
             throw new NotImplementedException();
         }

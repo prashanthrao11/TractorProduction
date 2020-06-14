@@ -22,7 +22,7 @@ namespace TractorProduction.Web.Controllers
 
         #region GET: api/DepartmentApprover/2
         [HttpGet("DepartmentApprovers/{id}")]
-        public async Task<ActionResult<IEnumerable<DepartmentApprover>>> GetDepartmentApproversById(int id)
+        public async Task<ActionResult> GetDepartmentApproversById(int id)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region PUT: api/DepartmentApprovers
         [HttpPost("DepartmentApprovers")]
-        public async Task<ActionResult<Production>> UpdateDepartmentApprovers([FromBody]DepartmentApproversVM model)
+        public async Task<ActionResult> UpdateDepartmentApprovers([FromBody]DepartmentApproversVM model)
         {
             if (ModelState.IsValid)
             {

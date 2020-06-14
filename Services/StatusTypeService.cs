@@ -9,48 +9,87 @@ using TractorProduction.Web.Repositories;
 
 namespace TractorProduction.Web.Services
 {
-    public class StatusTypeService : IStatusTypeRepository
+    public class StatusTypeService : BaseService, IStatusTypeRepository
     {
-        private readonly APIContext _context;
-        public StatusTypeService(APIContext context)
+      
+
+        public StatusTypeService(APIContext context, ILogDetailsRepository log, IUserRepository user) : base(context, log, user)
         {
-            _context = context;
+
         }
-        public async Task<int> AddStatusType(StatusType statustype)
+        public async Task<Response<int>> AddStatusType(StatusType statustype)
         {
-            if (_context != null)
+            try
             {
                 await _context.StatusType.AddAsync(statustype);
                 await _context.SaveChangesAsync();
-                return statustype.Status_Type_Id;
+                return new Response<int>()
+                {
+                    IsSuccess = true,
+                    Model = statustype.Status_Type_Id
+                };
             }
-            return 0;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<int>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task<int> DeleteStatusType(int? statustypeId)
+        public Task<Response<int>> DeleteStatusType(int? statustypeId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<StatusType> GetStatusTypeById(int? statustypeId)
+        public async Task<Response<StatusType>> GetStatusTypeById(int? statustypeId)
         {
-            if (_context != null)
+            try
             {
-                return await _context.StatusType.Where(x => x.Status_Type_Id == statustypeId).FirstOrDefaultAsync();
+                var model= await _context.StatusType.Where(x => x.Status_Type_Id == statustypeId).FirstOrDefaultAsync();
+                return new Response<StatusType>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<StatusType>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public async Task<List<StatusType>> GetStatusTypes()
+        public async Task<Response<List<StatusType>>> GetStatusTypes()
         {
-            if (_context != null)
+            try
             {
-                return await _context.StatusType.ToListAsync();
+                var model= await _context.StatusType.ToListAsync();
+                return new Response<List<StatusType>>()
+                {
+                    IsSuccess = true,
+                    Model = model
+                };
             }
-            return null;
+            catch (Exception ex)
+            {
+                _log.Error(ex, _user.GetCurrentUser().User_Name);
+                return new Response<List<StatusType>>()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
         }
 
-        public Task UpdateStatusType(StatusType statustype)
+        public Task<Response<bool>> UpdateStatusType(StatusType statustype)
         {
             throw new NotImplementedException();
         }

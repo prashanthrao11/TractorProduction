@@ -6,12 +6,12 @@ using TractorProduction.Web.Models;
 
 namespace TractorProduction.Web.Repositories
 {
-   public interface IWorkflowRepository
+   public interface IWorkflowRepository : IDisposable
     {
-        Task<List<Workflow>> GetWorkflows();
-        Task<Workflow> GetWorkflowById(int? workflowId);
-        Task<int> AddWorkflow(Workflow workflow);
-        Task<int> DeleteWorkflow(int? workflowId);
-        Task UpdateWorkflow(Workflow workflow);
+        Task<Response<List<Workflow>>> GetWorkflows();
+        Task<Response<Workflow>> GetWorkflowById(int? workflowId);
+        Task<Response<int>> AddWorkflow(Workflow workflow);
+        Task<Response<int>> DeleteWorkflow(int? workflowId);
+        Task<Response<bool>> UpdateWorkflow(Workflow workflow);
     }
 }

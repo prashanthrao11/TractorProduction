@@ -22,7 +22,7 @@ namespace TractorProduction.Web.Controllers
 
         #region GET: api/WorkflowPhaseMilestone
         [HttpGet("WorkflowPhaseMilestone")]
-        public async Task<ActionResult<IEnumerable<WorkflowPhaseMilestone>>> Get()
+        public async Task<ActionResult> Get()
         {
             try
             {
@@ -42,7 +42,7 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region GET: api/WorkflowPhaseMilestone/2
         [HttpGet("WorkflowPhaseMilestone/{id}")]
-        public async Task<ActionResult<IEnumerable<WorkflowPhaseMilestone>>> GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region PUT: api/ProjectMilestone
         [HttpPut]
-        public async Task<ActionResult<WorkflowPhaseMilestone>> UpdateProjectMilestone([FromBody]MilestoneManageVM model)
+        public async Task<ActionResult> UpdateProjectMilestone([FromBody]MilestoneManageVM model)
         {
             if (ModelState.IsValid)
             {
@@ -85,27 +85,11 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region POST: api/ProjectMilestone
         [HttpPost("WorkflowPhaseMilestone")]
-        public async Task<ActionResult<WorkflowPhaseMilestone>> AddProjectMilestone(MilestoneManageVM model)
+        public async Task<ActionResult> AddProjectMilestone(MilestoneManageVM model)
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var milestoneId = await _repository.AddWorkflowPhaseMilestone(model);
-
-                    if (milestoneId > 0)
-                    {
-                        return Ok(milestoneId);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new JsonException(ex.Message, ex);
-                }
+                return Ok(await _repository.AddWorkflowPhaseMilestone(model));
             }
             return BadRequest();
         }
@@ -113,28 +97,9 @@ namespace TractorProduction.Web.Controllers
 
         #region DELETE: api/ProjectMilestone/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<WorkflowPhaseMilestone>> Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
-            int result = 0;
-
-            if (id == null)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                result = await _repository.DeleteWorkflowPhaseMilestone(id);
-                if (result == 0)
-                {
-                    return NotFound();
-                }
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                throw new JsonException(ex.Message, ex);
-            }
+            return Ok(await _repository.DeleteWorkflowPhaseMilestone(id));
         }
         #endregion
     }

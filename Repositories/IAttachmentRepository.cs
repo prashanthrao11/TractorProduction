@@ -6,11 +6,11 @@ using TractorProduction.Web.Models;
 
 namespace TractorProduction.Web.Repositories
 {
-    public interface IAttachmentRepository
+    public interface IAttachmentRepository : IDisposable
     {
-        public Task<List<AttachmentHeader>> GetAttachmentDocs(int productionId);
-        public Task<List<AttachmentHeader>> GetProductionMilestoneAttachments(int prodMilestoneId);
-        public Task<AttachmentDoc> UploadDoc(AttachmentDoc model);
-        public Task<List<AttachmentHeader>> DeleteDoc(AttachmentHeader model);
+        public Task<Response<List<AttachmentHeader>>> GetAttachmentDocs(int productionId);
+        public Task<Response<List<AttachmentHeader>>> GetProductionMilestoneAttachments(int prodMilestoneId);
+        public Task<Response<AttachmentDoc>> UploadDoc(AttachmentDoc model);
+        public Task<Response<List<AttachmentHeader>>> DeleteDoc(AttachmentHeader model);
     }
 }

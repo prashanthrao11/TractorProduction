@@ -6,13 +6,13 @@ using TractorProduction.Web.Models;
 
 namespace TractorProduction.Web.Repositories
 {
-    public interface IDepartmentRepository
+    public interface IDepartmentRepository : IDisposable
     {
-        Task<List<Department>> GetDepartments();
-        Task<Department> GetDepartmentById(int? departmentId);
+        Task<Response<List<Department>>> GetDepartments();
+        Task<Response<Department>> GetDepartmentById(int? departmentId);
        
-        Task<int> AddDepartment(Department department);
-        Task<int> DeleteDepartment(int? departmentId);
-        Task UpdateDepartment(Department department);
+        Task<Response<int>> AddDepartment(Department department);
+        Task<Response<int>> DeleteDepartment(int? departmentId);
+        Task<Response<bool>> UpdateDepartment(Department department);
     }
 }

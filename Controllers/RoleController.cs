@@ -22,7 +22,7 @@ namespace TractorProduction.Web.Controllers
 
         #region GET: api/Role
         [HttpGet("Role")]
-        public async Task<ActionResult<IEnumerable<Role>>> Get()
+        public async Task<ActionResult> Get()
         {
             try
             {
@@ -42,7 +42,7 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region GET: api/Role/2
         [HttpGet("Role/{id}")]
-        public async Task<ActionResult<IEnumerable<Role>>> GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region PUT: api/ProjectMilestone
         [HttpPut]
-        public async Task<ActionResult<Role>> UpdateProjectMilestone([FromBody]Role model)
+        public async Task<ActionResult> UpdateProjectMilestone([FromBody]Role model)
         {
             if (ModelState.IsValid)
             {
@@ -85,27 +85,11 @@ namespace TractorProduction.Web.Controllers
         #endregion
         #region POST: api/ProjectMilestone
         [HttpPost("Role")]
-        public async Task<ActionResult<Role>> AddProjectMilestone(Role model)
+        public async Task<ActionResult> AddProjectMilestone(Role model)
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var milestoneId = await _repository.AddRole(model);
-
-                    if (milestoneId > 0)
-                    {
-                        return Ok(milestoneId);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new JsonException(ex.Message, ex);
-                }
+                return Ok(await _repository.AddRole(model));
             }
             return BadRequest();
         }
@@ -113,28 +97,9 @@ namespace TractorProduction.Web.Controllers
 
         #region DELETE: api/ProjectMilestone/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Role>> Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
-            int result = 0;
-
-            if (id == null)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                result = await _repository.DeleteRole(id);
-                if (result == 0)
-                {
-                    return NotFound();
-                }
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                throw new JsonException(ex.Message, ex);
-            }
+            return Ok(await _repository.DeleteRole(id));
         }
         #endregion
     }
