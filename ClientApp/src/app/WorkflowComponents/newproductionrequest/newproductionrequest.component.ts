@@ -20,7 +20,9 @@ export class NewproductionrequestComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.productionRequest = new ProductionRequestModel();
-    this.route.params.subscribe(params => { this.productionRequest.Production_ID = +params['prodId']||0; });
+    this.route.params.subscribe(params => {
+      this.productionRequest.Production_ID = +atob(params['prodId']) || 0;
+    });
   }
 
   ngOnInit() {
@@ -31,12 +33,12 @@ export class NewproductionrequestComponent implements OnInit {
   }
   loadWorkflowData() {
     this.workflowService.getAll().subscribe(data => {
-      this.workflowItems = data;
+      this.workflowItems = data.Model;
     });
   }
   loadRequest() {
     this.prodService.getById(this.productionRequest.Production_ID).subscribe(data => {
-      this.productionRequest = data;
+      this.productionRequest = data.Model;
     });
   }
   saveProductionRequest() {

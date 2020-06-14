@@ -140,7 +140,7 @@ namespace TractorProduction.Web.Services
                     select new Production()
                     {
                         Production_ID = p.Production_ID,
-
+                        Date=p.Date,
                         Tractor_Part_Number = p.Tractor_Part_Number,
                         Tractor_SAP_Series = p.Tractor_SAP_Series,
                         Is_Change_Tractor = p.Is_Change_Tractor,
