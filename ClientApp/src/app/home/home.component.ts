@@ -41,4 +41,13 @@ export class HomeComponent implements OnInit{
   editRequest(id) {
     this.router.navigate(['newrequest', btoa(id)]);
   }
+  goToMilestoneApporovals(id) {
+    this.router.navigate(['milestoneapprovals', btoa(id)]);
+  }
+  goToApprovers(id) {
+    this.router.navigate(['approvers', btoa(id)]);
+  }
+  goToFinalApprovers(id) {
+    this.router.navigate(['finalapprovers', btoa(id)]);
+  }
 }

@@ -15,6 +15,7 @@ export class RequestapproversComponent implements OnInit {
 
   model: ProductionapproverVM;
   prodItem: ProductionRequestModel;
+  isUserHasPermission: boolean = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -24,7 +25,7 @@ export class RequestapproversComponent implements OnInit {
   ) {
     this.model = new ProductionapproverVM();
     this.prodItem = new ProductionRequestModel();
-    this.route.params.subscribe(params => { this.model.Production_ID = params['id']; });
+    this.route.params.subscribe(params => { this.model.Production_ID = +atob(params['prodId']) || 0;});
   }
 
   ngOnInit() {
@@ -42,12 +43,15 @@ export class RequestapproversComponent implements OnInit {
   }
   loadProductionApprovers() {
     this.service.getById(this.model.Production_ID).subscribe(data => {
-      this.model.Items = data;
+      this.model.Items = data.Model;
+      if (this.model.Items.length > 0) {
+        this.isUserHasPermission = true;
+      }
     });
   }
   loadProdItem() {
     this.prodService.getById(this.model.Production_ID).subscribe(data => {
-      this.prodItem = data;
+      this.prodItem = data.Model;
       console.log(data);
     });
   }

@@ -27,7 +27,7 @@ export class RequestfinalapproversComponent implements OnInit {
   ) {
     this.model = new ProductionUserApproval();
     this.prodItem = new ProductionRequestModel();
-    this.route.params.subscribe(params => { this.model.Production_ID = params['id']; });
+    this.route.params.subscribe(params => { this.model.Production_ID = +atob(params['prodId']) || 0; });
   }
 
   ngOnInit() {
@@ -43,17 +43,17 @@ export class RequestfinalapproversComponent implements OnInit {
   }
   loadData() {
     this.service.getById(this.model.Production_ID).subscribe(data => {
-      this.model = data;
-      console.log("test");
+      this.model = data.Model;
       console.log(this.model);
-      if (this.model != null && this.model != undefined && data.length>0) {
+      if (this.model != null && this.model != undefined) {
         this.isLoaded = true;
+        console.log("test");
       }
     });
   }
   loadProdItem() {
     this.prodService.getById(this.model.Production_ID).subscribe(data => {
-      this.prodItem = data;
+      this.prodItem = data.Model;
       console.log(data);
     });
   }

@@ -36,7 +36,7 @@ export class ApproversTrackerComponent implements OnInit {
   }
   loadProductionApprovers() {
     this.service.getAllById(this.model.Production_ID).subscribe(data => {
-      this.model.Items = data;
+      this.model.Items = data.Model;
       this.model.Items.forEach(item => {
         if (!this.deptItems.find(x => x.Department_ID == item.Department_ID)) {
           var dItem = new DepartmentModel();
@@ -55,7 +55,7 @@ export class ApproversTrackerComponent implements OnInit {
   }
   loadProdItem() {
     this.prodService.getById(this.model.Production_ID).subscribe(data => {
-      this.prodItem = data;
+      this.prodItem = data.Model;
     });
   }
 }

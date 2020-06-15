@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card"  *ngIf="isUserHasPermission">
   <div class="card-header">
     <strong>Production User Approvals</strong>
   </div>
@@ -36,4 +36,7 @@
   <div class="card-footer">
     <button id="btnSave1" name="btnSave1" (click)="save()" class="btn-primary btn">Save Details</button>
   </div>
+</div>
+<div class="card" *ngIf="!isUserHasPermission">
+  <div class="p-4 bg-warning">You do not have access to this page.</div>
 </div>

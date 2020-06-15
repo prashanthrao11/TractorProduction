@@ -39,7 +39,7 @@ export class MilestoneTrackerComponent implements OnInit {
   }
   loadProduction() {
     this.prodService.getById(this.model.Production_ID).subscribe(data => {
-      this.prodItem = data;
+      this.prodItem = data.Model;
     });
   }
   save() {
@@ -53,7 +53,7 @@ export class MilestoneTrackerComponent implements OnInit {
   }
   loadProductionMilestones() {
     this.service.getById(this.model.Production_ID).subscribe(data => {
-      this.model.ProductionMilestones = data;
+      this.model.ProductionMilestones = data.Model;
       this.model.ProductionMilestones.forEach(item => {
         var phaseId = item.PhaseItem.Product_Phase_ID;
         var deptId = item.DeptItem.Department_ID;

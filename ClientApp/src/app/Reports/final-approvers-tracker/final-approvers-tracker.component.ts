@@ -39,13 +39,13 @@ export class FinalApproversTrackerComponent implements OnInit {
   loadData() {
     this.service.getAll(this.productionId).subscribe(data => {
       console.log(data);
-      this.Items = data;
+      this.Items = data.Model;
       this.isLoaded = true;
     });
   }
   loadProdItem() {
     this.prodService.getById(this.productionId).subscribe(data => {
-      this.prodItem = data;
+      this.prodItem = data.Model;
       console.log(data);
     });
   }

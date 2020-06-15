@@ -7,19 +7,19 @@
         </div>
         <div class="form-group">
           <label for="email">Tractor Part Number:</label>
-          <input type="text" class="form-control" id="Tractor_Part_Number" [(ngModel)]="searchModel.Tractor_Part_Number">
+          <input type="text" class="form-control" maxlength="100" id="Tractor_Part_Number" [(ngModel)]="searchModel.Tractor_Part_Number">
         </div>
         <div class="form-group">
           <label for="pwd">Engine Part Number:</label>
-          <input type="text" class="form-control" id="Engine_Part_Number" [(ngModel)]="searchModel.Engine_Part_Number">
+          <input type="text" class="form-control" maxlength="100" id="Engine_Part_Number" [(ngModel)]="searchModel.Engine_Part_Number">
         </div>
         <div class="form-group">
           <label for="pwd">Transmission Part Number:</label>
-          <input type="text" class="form-control" id="Transmission_Part_Number" [(ngModel)]="searchModel.Transmission_Part_Number">
+          <input type="text" class="form-control" maxlength="100" id="Transmission_Part_Number" [(ngModel)]="searchModel.Transmission_Part_Number">
         </div>
         <div class="form-group">
           <label for="pwd">Hydraulics Part Number:</label>
-          <input type="text" class="form-control" id="Hydraulics_Part_Number" [(ngModel)]="searchModel.Hydraulics_Part_Number">
+          <input type="text" class="form-control" maxlength="100" id="Hydraulics_Part_Number" [(ngModel)]="searchModel.Hydraulics_Part_Number">
         </div>
         <button type="button" class="btn btn-primary" (click)="searchRecords();">Search</button>
         <button type="button" class="btn btn-secondary ml-2" (click)="clear();">Clear</button>
@@ -69,17 +69,17 @@
                   </a>
                 </div>
                 <div _ngcontent-qwc-c46="" class="col-md-3 col-3 border-right text-center">
-                  <a _ngcontent-qwc-c46="" [routerLink]="['/milestoneapprovals',item.Production_ID]" title="Production Milestones Edit">
+                  <a _ngcontent-qwc-c46="" (click)="goToMilestoneApporovals(item.Production_ID)" title="Production Milestones Edit">
                     <img _ngcontent-qwc-c46="" src="assets/images/MilestoneDashboardwhite.png" alt="">
                   </a>
                 </div>
                 <div _ngcontent-qwc-c46="" class="col-md-3 col-3 border-right text-center">
-                  <a _ngcontent-qwc-c46="" [routerLink]="['/approvers',item.Production_ID]" title="Production Users Approval">
+                  <a _ngcontent-qwc-c46="" (click)="goToApprovers(item.Production_ID)" title="Production Users Approval">
                     <img _ngcontent-qwc-c46="" src="assets/images/Project_new.png" alt="">
                   </a>
                 </div>
                 <div _ngcontent-qwc-c46="" class="col-md-3 col-3 text-center">
-                  <a _ngcontent-qwc-c46="" [routerLink]="['/finalapprovers',item.Production_ID]" title="Production Final Users Approval">
+                  <a _ngcontent-qwc-c46="" (click)="goToFinalApprovers(item.Production_ID)" title="Production Final Users Approval">
                     <img _ngcontent-qwc-c46="" src="assets/images/setup.png" alt="">
                   </a>
                 </div>

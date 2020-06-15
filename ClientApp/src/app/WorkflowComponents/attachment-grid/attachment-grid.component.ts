@@ -54,12 +54,12 @@ export class AttachmentGridComponent implements OnInit {
   }
   loadAttachments() {
     this.fileUploadService.getById(this.prodmilestoneId).subscribe(data => {
-      this.list = data;
+      this.list = data.Model;
     });
   }
   delItem(item) {
     this.fileUploadService.del(item).subscribe(data => {
-      this.list = data;
+      this.list = data.Model;
     });
   }
 }

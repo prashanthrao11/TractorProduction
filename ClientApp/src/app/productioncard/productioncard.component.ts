@@ -16,7 +16,7 @@ export class ProductioncardComponent implements OnInit {
   }
   loadProdItem() {
     this.prodService.getById(this.Production_ID).subscribe(data => {
-      this.prodItem = data;
+      this.prodItem = data.Model;
     });
   }
 }

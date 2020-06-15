@@ -24,7 +24,10 @@ export class RequestmilestonesComponent implements OnInit {
     private fileUploadService: FileuploadService
   ) {
     this.model = new ProductionMilestonesModel();
-    this.route.params.subscribe(params => { this.model.Production_ID = params['id']; });
+
+    this.route.params.subscribe(params => {
+      this.model.Production_ID = parseInt(atob(params['prodId']));
+    });
   }
 
   ngOnInit() {
@@ -42,7 +45,7 @@ export class RequestmilestonesComponent implements OnInit {
   }
   loadProductionMilestones() {
     this.service.getById(this.model.Production_ID).subscribe(data => {
-      this.model.ProductionMilestones = data;
+      this.model.ProductionMilestones = data.Model;
     });
   }
 }

@@ -97,9 +97,12 @@ import { ProductioncardComponent } from './productioncard/productioncard.compone
 
       { path: 'newrequest', component: NewproductionrequestComponent },
       { path: 'newrequest/:prodId', component: NewproductionrequestComponent },
-      { path: 'milestoneapprovals/:id', component: RequestmilestonesComponent },
-      { path: 'approvers/:id', component: RequestapproversComponent },
-      { path: 'finalapprovers/:id', component: RequestfinalapproversComponent },
+      { path: 'milestoneapprovals/:prodId', component: RequestmilestonesComponent },
+      { path: 'approvers/:prodId', component: RequestapproversComponent },
+      { path: 'finalapprovers/:prodId', component: RequestfinalapproversComponent },
+      { path: 'milestonetracker/:prodId', component: MilestoneTrackerComponent },
+      { path: 'approvertracker/:prodId', component: ApproversTrackerComponent },
+      { path: 'finalapproverstracker/:prodId', component: FinalApproversTrackerComponent },
 
       { path: 'adminpanel', component: ProdAdminPanelComponent },
       { path: 'phase', component: ManagePhaseComponent },
@@ -107,11 +110,9 @@ import { ProductioncardComponent } from './productioncard/productioncard.compone
       { path: 'milestone', component: WorkflowPhaseMilestoneComponent },
       { path: 'deptmilestone', component: WorkflowDeptMilestoneComponent },
       { path: 'manageuser', component: ManageUserComponent },
-      { path: 'manageapprovers', component: WorkflowApproversComponent },
+      { path: 'manageapprovers', component: WorkflowApproversComponent }
 
-      { path: 'milestonetracker/:id', component: MilestoneTrackerComponent },
-      { path: 'approvertracker/:id', component: ApproversTrackerComponent },
-      { path: 'finalapproverstracker/:id', component: FinalApproversTrackerComponent }
+     
     ])
   ],
   providers: [DatePipe],
